@@ -1,7 +1,6 @@
 'use server'
 
 import NavBar from "@/app/_components/navbar";
-import mouseIcon from '/public/assets/whiteMouse.svg';
 import Image from "next/image";
 import { Icons } from "../_components/icons";
 import Link from "next/link";
@@ -12,8 +11,10 @@ import ContactUsForm from "./ContactUsForm";
 
 
 export default async function Home() {
-  const host = headers().get('host');
+  const headersList = await headers()
   
+  const host = headersList.get('host')
+
   console.log(host);
 
   const result = await isBaseDomain(host)
@@ -62,7 +63,7 @@ export default async function Home() {
             </div>
 
             <div className="flex flex-row gap-2 items-center hover:animate-bobbing cursor-default ">
-              <Image className="text-WHITE" src={mouseIcon} alt="" width={24} height={24}/>
+              <Image className="text-WHITE" src="/assets/whiteMouse.svg" alt="" width={24} height={24}/>
               <span className="text-xs">Scroll to see more sections</span>
             </div>
           </div>

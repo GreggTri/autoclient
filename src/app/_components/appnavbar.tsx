@@ -38,10 +38,10 @@ const AppNavBar = () => {
                     Dashboard
                 </Link>
                 <Link 
-                    href="/dashboard/analytics"
+                    href="/dashboard/agents"
                     className={`${isActive("/dashboard/analytics") ? 'border-b border-WHITE' : 'hover:bg-WHITE/20 hover:px-1 hover:py-0 hover:rounded-md'} px-1`}
                 >
-                    Analytics
+                    Agents
                 </Link>
                 <Link 
                     href="/dashboard/forms"
@@ -64,11 +64,11 @@ const AppNavBar = () => {
                     Dashboard
                 </Link>
                 <Link 
-                    href="/dashboard/analytics"  
+                    href="/dashboard/agents"  
                     className="lg:hidden text-lg hover:bg-WHITE/20 hover:px-1 hover:py-0 hover:rounded-md px-1" 
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
-                    Analytics
+                    Agents
                 </Link>
                 <Link 
                     href="/dashboard/forms" 

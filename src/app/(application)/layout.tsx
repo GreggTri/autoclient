@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import AppNavBar from "../_components/appnavbar";
-import DesignerContextProvider from "./dashboard/forms/_formComponents/context/DesignerContext";
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -19,9 +18,7 @@ const Layout: React.FC<LayoutProps> = ({children}) => {
              {showNavBar &&
                 <div className="flex flex-col">
                     <AppNavBar />
-                    <DesignerContextProvider>
                         {children}
-                    </DesignerContextProvider>
                 </div>
             }
             
