@@ -44,10 +44,16 @@ const AppNavBar = () => {
                     Agents
                 </Link>
                 <Link 
-                    href="/dashboard/forms"
-                    className={`${isActive("/dashboard/forms") ? 'border-b border-WHITE' : 'hover:bg-WHITE/20 hover:px-1 hover:py-0 hover:rounded-md'} px-1`}    
+                    href="/dashboard/calls"
+                    className={`${isActive("/dashboard/calls") ? 'border-b border-WHITE' : 'hover:bg-WHITE/20 hover:px-1 hover:py-0 hover:rounded-md'} px-1`}    
                 >
-                    Forms
+                    Calls
+                </Link>
+                <Link 
+                    href="/dashboard/leads"
+                    className={`${isActive("/dashboard/leads") ? 'border-b border-WHITE' : 'hover:bg-WHITE/20 hover:px-1 hover:py-0 hover:rounded-md'} px-1`}    
+                >
+                    Leads
                 </Link>
             </div>
 
@@ -71,11 +77,18 @@ const AppNavBar = () => {
                     Agents
                 </Link>
                 <Link 
-                    href="/dashboard/forms" 
+                    href="/dashboard/calls" 
                     className="lg:hidden text-lg hover:bg-WHITE/20 hover:px-1 hover:py-0 hover:rounded-md px-1" 
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
-                    Forms
+                    Calls
+                </Link>
+                <Link 
+                    href="/dashboard/leads" 
+                    className="lg:hidden text-lg hover:bg-WHITE/20 hover:px-1 hover:py-0 hover:rounded-md px-1" 
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                    Leads
                 </Link>
 
                 {/* Links visible only in the vertical menu */} 

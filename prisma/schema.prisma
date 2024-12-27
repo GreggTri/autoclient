@@ -15,7 +15,7 @@ datasource db {
 
 model User {
   id        Int      @default(autoincrement())
-  tenantId  Int  
+  tenantId  Int
   email     String   @unique
   password  String
   firstName String?
@@ -27,16 +27,13 @@ model User {
   org Org @relation(fields: [tenantId], references: [id])
 
   @@id([id, tenantId])
-
   @@map("users")
 }
 
-
-
 model Org {
-  id                     Int    @id @default(autoincrement())
-  companyName            String    @unique
-  
+  id          Int    @id @default(autoincrement())
+  companyName String @unique
+
   stripeCustomerId       String?   @map(name: "stripe_customer_id")
   stripeSubscriptionId   String?   @map(name: "stripe_subscription_id")
   stripePriceId          String?   @map(name: "stripe_price_id")
@@ -44,23 +41,24 @@ model Org {
   updatedAt              DateTime  @updatedAt
   createdAt              DateTime  @default(now())
 
-  invites         Invite[]
-  users           User[]
-  agents          Agent[]
+  invites Invite[]
+  users   User[]
+  agents  Agent[]
+  calls   Call[]
+  leads   Lead[]
 
   @@map("orgs")
 }
 
 model Invite {
-  id       String
-  tenantId Int
-  isActive Boolean @default(true)
-  createdAt  DateTime  @default(now())
+  id        String
+  tenantId  Int
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
 
   org Org @relation(fields: [tenantId], references: [id])
 
   @@id([id, tenantId])
-
   @@map("invites")
 }
 
@@ -72,6 +70,25 @@ model Agent {
   org Org @relation(fields: [tenantId], references: [id])
 
   @@id([id, tenantId])
-
   @@map("agents")
+}
+
+model Call {
+  id       String
+  tenantId Int
+
+  org Org @relation(fields: [tenantId], references: [id])
+
+  @@id([id, tenantId])
+  @@map("calls")
+}
+
+model Lead {
+  id       String
+  tenantId Int
+
+  org Org @relation(fields: [tenantId], references: [id])
+
+  @@id([id, tenantId])
+  @@map("leads")
 }

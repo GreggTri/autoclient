@@ -53,7 +53,8 @@ export const createAgent = cache(async () => {
                     "enableTranscription": true,
                 }
             },
-            "firstMessage": "Hello! How can I help you today?",
+            "recordingEnabled": true,
+            "firstMessage": "Hello! How can I help you today?", //this should be dynamic
             "firstMessageMode": "assistant-speaks-first",
             "hipaaEnabled": false,
             "startSpeakingPlan": {
