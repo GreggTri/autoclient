@@ -37,7 +37,7 @@ export async function createAgentAction(formData: FormValues){
     const insertedAgent = await prisma.agent.create({
         data: {
             'id': newAgent!.id,
-            'tenantId': Number(session.tenantId)
+            'tenantId': String(session.tenantId)
         }
     })
 

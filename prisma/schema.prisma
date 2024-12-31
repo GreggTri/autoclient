@@ -69,15 +69,21 @@ model Agent {
 
   org Org @relation(fields: [tenantId], references: [id])
 
+  calls Call[]
+
   @@id([id, tenantId])
   @@map("agents")
 }
 
 model Call {
   id       String @unique
+  agentId  String
   tenantId String
 
-  org Org @relation(fields: [tenantId], references: [id])
+  agent Agent @relation(fields: [agentId], references: [id])
+  org   Org   @relation(fields: [tenantId], references: [id])
+
+  lead Lead?
 
   @@id([id, tenantId])
   @@map("calls")
@@ -85,9 +91,11 @@ model Call {
 
 model Lead {
   id       String @unique @default(uuid())
+  callId   String? @unique
   tenantId String
 
-  org Org @relation(fields: [tenantId], references: [id])
+  call Call? @relation(fields: [callId], references: [id])
+  org  Org  @relation(fields: [tenantId], references: [id])
 
   @@id([id, tenantId])
   @@map("leads")
