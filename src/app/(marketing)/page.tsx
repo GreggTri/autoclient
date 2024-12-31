@@ -4,26 +4,10 @@ import NavBar from "@/app/_components/navbar";
 import Image from "next/image";
 import { Icons } from "../_components/icons";
 import Link from "next/link";
-import { isBaseDomain } from "../_lib/CheckDomain";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 import ContactUsForm from "./ContactUsForm";
 
 
 export default async function Home() {
-  const headersList = await headers()
-  
-  const host = headersList.get('host')
-
-  console.log(host);
-
-  const result = await isBaseDomain(host)
-  
-  if (!result) {
-    console.log("I made it");
-    // Redirect if the domain is not authorized
-    redirect('/no-token');
-  }
 
   return (
     <div className="flex flex-col ">

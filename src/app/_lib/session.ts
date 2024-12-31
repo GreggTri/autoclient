@@ -27,15 +27,17 @@ export async function decrypt(session: string | undefined = '') {
         });
         return payload;
     } catch (error) {
+        console.log(error);
         return null;
     }
 }
 
 export async function createSession(userId: string, isAdmin: boolean, tenantId: string, stripeSubscriptionId: string | null) {
+    const cookieStore = await cookies()
     const expiresAt = new Date(Date.now() + 4 * 60 * 60 * 1000);
     const session = await encrypt({ userId, isAdmin, tenantId, stripeSubscriptionId });
-
-    cookies().set('session', session, {
+    
+    cookieStore.set('session', session, {
         httpOnly: true,
         secure: true,
         expires: expiresAt,
@@ -62,13 +64,14 @@ async function authorizeSession(session: JWTPayload | null, adminOnly: boolean){
 }
 
 export async function verifySession(adminOnly: boolean) {
-    const cookie = cookies().get('session')?.value;
+    const cookieStore = await cookies()
+    const cookie = cookieStore.get('session')?.value;
     const session = await decrypt(cookie);
 
     const authSession: JWTPayload = await authorizeSession(session, adminOnly)
     
     if (!authSession.userId) {
-        cookies().delete('session');
+        cookieStore.delete('session');
         redirect('/login');
     }
     
@@ -83,7 +86,8 @@ export async function verifySession(adminOnly: boolean) {
 }
 
 export async function updateSession() {
-    const session = cookies().get('session')?.value;
+    const cookieStore = await cookies() 
+    const session = cookieStore.get('session')?.value
     const payload = await decrypt(session);
 
     if (!session || !payload) {
@@ -94,7 +98,7 @@ export async function updateSession() {
     
         const expires = new Date(Date.now() + 4 * 60 * 60 * 1000);
 
-        cookies().set('session', session, {
+        cookieStore.set('session', session, {
             httpOnly: true,
             secure: true,
             expires: expires,
@@ -105,6 +109,7 @@ export async function updateSession() {
 }
 
 export async function deleteSession() {
-    cookies().delete('session');
+    const cookieStore = await cookies()
+    cookieStore.delete('session');
 
 }

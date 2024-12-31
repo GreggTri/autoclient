@@ -1,11 +1,11 @@
 'use client'
 import Link from "next/link"
 
-import { cn } from "@/app/lib/utils"
-import { buttonVariants } from "@/app/_components/ui/button"
+import { cn } from "@/lib/utils"
+import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/app/_components/icons"
-import { Label } from "@/app/_components/ui/label"
-import { Input } from "@/app/_components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
 
 import { registerUser } from '@/app/(auth)/register/actions'
 import { useFormState, useFormStatus } from "react-dom"

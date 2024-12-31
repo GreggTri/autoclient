@@ -4,20 +4,22 @@ import * as React from "react"
 
 //import { signIn } from "next-auth/react"
 
-import { cn } from "@/app/lib/utils"
+import { cn } from "@/lib/utils"
 //import { userAuthSchema } from "@/lib/validations/auth"
-import { buttonVariants } from "@/app/_components/ui/button"
-import { Input } from "@/app/_components/ui/input"
-import { Label } from "@/app/_components/ui/label"
+import { buttonVariants } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Icons } from "./icons"
-import { useFormState, useFormStatus } from "react-dom"
+import {useFormStatus } from "react-dom"
 import { loginUser } from "../(auth)/login/actions"
+import { useActionState } from "react"
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const [state, action] = useFormState(loginUser, undefined)
+  const [state, action] = useActionState(loginUser, undefined)
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>

@@ -5,7 +5,7 @@ import Search from "./search";
 import Pagination from "@/app/_components/pagination";
 import User from "./user";
 import { Icons } from "@/app/_components/icons";
-import { Popover, PopoverContent, PopoverTrigger } from "@/app/_components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { sendUserInvite } from "./actions";
 
 interface user {

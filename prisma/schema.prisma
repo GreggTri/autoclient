@@ -14,8 +14,8 @@ datasource db {
 }
 
 model User {
-  id        Int      @default(autoincrement())
-  tenantId  Int
+  id        String   @unique @default(uuid())
+  tenantId  String
   email     String   @unique
   password  String
   firstName String?
@@ -31,7 +31,7 @@ model User {
 }
 
 model Org {
-  id          Int    @id @default(autoincrement())
+  id          String @id @default(uuid())
   companyName String @unique
 
   stripeCustomerId       String?   @map(name: "stripe_customer_id")
@@ -51,8 +51,8 @@ model Org {
 }
 
 model Invite {
-  id        String
-  tenantId  Int
+  id        String   @default(uuid())
+  tenantId  String
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
 
@@ -63,9 +63,9 @@ model Invite {
 }
 
 model Agent {
-  id       String
-  tenantId Int
-  isActive Boolean @default(false)
+  id         String  @unique
+  tenantId   String
+  isArchived Boolean @default(false)
 
   org Org @relation(fields: [tenantId], references: [id])
 
@@ -74,8 +74,8 @@ model Agent {
 }
 
 model Call {
-  id       String
-  tenantId Int
+  id       String @unique
+  tenantId String
 
   org Org @relation(fields: [tenantId], references: [id])
 
@@ -84,8 +84,8 @@ model Call {
 }
 
 model Lead {
-  id       String
-  tenantId Int
+  id       String @unique @default(uuid())
+  tenantId String
 
   org Org @relation(fields: [tenantId], references: [id])
 

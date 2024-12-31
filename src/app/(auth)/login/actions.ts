@@ -75,7 +75,6 @@ export async function loginUser(state: AuthFormState, formData: FormData){
             select: {
                 id: true,
                 password: false,
-                role: true,
                 isAdmin: true,
                 tenantId: true,
             }

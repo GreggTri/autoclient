@@ -1,6 +1,6 @@
 'use client'
 
-import { Input } from '@/app/_components/ui/input'
+import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { toast } from '@/hooks/use-toast'
 import React, { useState, useTransition } from 'react'
@@ -34,6 +34,8 @@ function CompanyNameForm({ companyName }: { companyName: string }) {
           throw new Error("Renaming organization failed!");
         }
       } catch (error) {
+
+        console.log(error);
         toast({
           title: "Renaming Org Failed!",
           description: "Something went wrong! Please try again later and/or contact support!",

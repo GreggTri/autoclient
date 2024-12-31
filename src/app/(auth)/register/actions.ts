@@ -9,8 +9,7 @@ import { redirect } from 'next/navigation';
 
 
 export async function registerUser(state: AuthFormState, formData: FormData){
-    // validate fields 
-
+    // validate email and password
     const validationResult = RegisterFormSchema.safeParse({
         email: formData.get('email'),
         password: formData.get('password')
@@ -22,10 +21,10 @@ export async function registerUser(state: AuthFormState, formData: FormData){
         }
     }
 
+    //passed validation
     const { email, password } = validationResult.data
 
     try {
-
         const existingUser = await prisma.user.findUnique({
             where: {
                 email: email

@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { buttonVariants } from "@/app/_components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/app/_components/icons"
 import NavBar from "@/app/_components/navbar"
 import { cn } from "@/lib/utils"
