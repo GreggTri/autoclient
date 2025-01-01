@@ -4,7 +4,7 @@ import { cache } from "react";
 import { verifySession } from "../_lib/session";
 import { prisma } from "@/utils/prisma";
 //import { revalidatePath } from "next/cache";
-import { VapiClient } from "@vapi-ai/server-sdk";
+//import { VapiClient } from "@vapi-ai/server-sdk";
 
 
 type VoiceProvider = 
@@ -23,17 +23,27 @@ interface VoiceOption {
   voiceId: string;
 }
 
+//const vapi = new VapiClient({ token: process.env.VAPI_TOKEN });
 
-const vapi = new VapiClient({ token: process.env.VAPI_TOKEN });
+interface DataField {
+  fieldName: string;
+  valueType: "number" | "text" | "datetime" | "email";         // e.g. "string", "boolean", "number"
+  fieldDescription: string;
+}
 
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const createAgent = async (firstMessage: string, voiceOptions: string, systemPrompt: string, dataCollection: any) => {
-  const session = await verifySession(false) //false means user does not need to be admin to hit endpoint
-  if (!session) return null;
+export const createAgent = async (
+  firstMessage: string, 
+  voiceOptions: string, 
+  systemPrompt: string,
+  dataCollection: DataField[], 
+  tenantId: string
+) => {
+  
+  const structuredDataSchema = generateStructuredDataSchema(dataCollection);
 
   let firstVoiceOption: VoiceOption;
   let secondVoiceOption: VoiceOption;
+
   if(voiceOptions == "female"){
     //female
     firstVoiceOption = {
@@ -61,157 +71,128 @@ export const createAgent = async (firstMessage: string, voiceOptions: string, sy
 
   console.log(dataCollection);
 
-  const response = await vapi.assistants.create({
-    "name": "IntakeAgent",
-    'transcriber': {
-        'provider': "deepgram",
-        'language': "en",
-        'model': "nova-2-general"
-    },
-    "model": {
-        "model": "gpt-4o",
-        "messages": [
-            {
-                "role": "system",
-                "content": systemPrompt
-            }
-        ],
-        "provider": "openai",
-        "temperature": 0.7,
-        "emotionRecognitionEnabled": true
-    },
-    'voice': {
-        "provider": firstVoiceOption.provider,
-        "voiceId": firstVoiceOption.voiceId,
-        "chunkPlan": {
-            "enabled": true,
-            "minCharacters": 10,
-        },
-        "fallbackPlan": {
-        "voices": [
-            {
-              "provider": secondVoiceOption.provider,
-              "voiceId": secondVoiceOption.voiceId
-            }
-          ]
-        },
-    },
-    "firstMessage": firstMessage,
-    "firstMessageMode": "assistant-speaks-first",
-    "serverMessages": [
-        "end-of-call-report"
-    ],
-    "server": {
-      "url": String(process.env.AUTOCLIENT_API_URL),
-      "timeoutSeconds": 20,
-      "secret": "string",
-    },
-    "analysisPlan": {
-      "summaryPlan": {
-        "enabled": true,
-        "timeoutSeconds": 20
+  const response = await fetch(`${process.env.VAPI_API_URL}/assistant`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      "name": `IntakeAgent-${tenantId}`,
+      'transcriber': {
+          'provider': "deepgram",
+          'language': "en",
+          'model': "nova-2-general"
       },
-      "structuredDataPlan": {
-        "messages": [
-          {
-            "role": "system",
-            "content": "[Transcript Handling]\nsome data will be spelt out for you to more accurately input the data into the Structured Data Schema. Use context awareness to understand when this is occurring and use the spelt out data to satisfy the schema requirements where applicable."
+      "model": {
+          "model": "gpt-4o",
+          "messages": [
+              {
+                  "role": "system",
+                  "content": systemPrompt
+              }
+          ],
+          "provider": "openai",
+          "temperature": 0.7,
+          "emotionRecognitionEnabled": true
+      },
+      'voice': {
+          "provider": firstVoiceOption.provider,
+          "voiceId": firstVoiceOption.voiceId,
+          "chunkPlan": {
+              "enabled": true,
+              "minCharacters": 10,
           },
-          {
-            "role": "user", 
-            "content": "Here is the transcript:\n\n{{transcript}}\n\n"
-          }
-        ],
-        "enabled": true,
-        "schema": {
-          "type": "object",
-          "properties": {
-            "Client Name": {
-              "description": "This is the name of the human you are speaking to",
-              "type": "string"
-            },
-            "Client Email": {
-              "description": "The email of the client you are talking too",
-              "type": "string"
-            },
-            "PoliceReport": {
-              "description": "Does the potential new client know if there was a police report made",
-              "type": "boolean"
-            },
-            "haveInsurance": {
-              "description": "Does the potential new client you are talking to have insurance?",
-              "type": "boolean"
-            },
-            "clientPhoneNumber": {
-              "description": "The Phone number that belongs to the client you are talking too.",
-              "type": "string"
-            },
-            "AccidentDescription": {
-              "description": "What is the potential new clients description of the accident",
-              "type": "string"
-            },
-            "DateTime of Accident": {
-              "description": "This is the Date of the Accident that occured that potential new client is talking about.",
-              "type": "string"
-            }
+          "fallbackPlan": {
+          "voices": [
+              {
+                "provider": secondVoiceOption.provider,
+                "voiceId": secondVoiceOption.voiceId
+              }
+            ]
           },
-          "required": [
-            "Client Name",
-            "Client Email",
-            "PoliceReport",
-            "haveInsurance",
-            "clientPhoneNumber",
-            "AccidentDescription",
-            "DateTime of Accident"
-          ]
+      },
+      "firstMessage": firstMessage,
+      "firstMessageMode": "assistant-speaks-first",
+      "serverMessages": [
+          "end-of-call-report"
+      ],
+      "server": {
+        "url": String(process.env.AUTOCLIENT_API_URL),
+        "timeoutSeconds": 20,
+      },
+      "analysisPlan": {
+        "summaryPlan": {
+          "enabled": true
         },
-        "timeoutSeconds": 20
-      }
-    },
-    "artifactPlan": {
-      "recordingEnabled": true,
-      "videoRecordingEnabled": false,
-      "transcriptPlan": {
-        "enabled": true,
-      }
-    },
-    "hipaaEnabled": false,
-    "startSpeakingPlan": {
-        "waitSeconds": 0.8,
-        "transcriptionEndpointingPlan": {
-            "onPunctuationSeconds": 0.4,
-            "onNoPunctuationSeconds": 1
-        },
-        "smartEndpointingEnabled": false
-    },
-    "silenceTimeoutSeconds": 300,
-    "maxDurationSeconds": 10800,
-    "backgroundSound": "off",
-    "clientMessages": [
-        "conversation-update",
-        "function-call"
-    ],
-    "endCallPhrases": [
-        "goodbye"
-    ],
-    "backgroundDenoisingEnabled": false,
-    "stopSpeakingPlan": {
-        "numWords": 0
-    },
-  });
-  
+        "structuredDataPrompt": "[Transcript Handling]\nsome data will be spelt out for you to more accurately input the data into the Structured Data Schema. Use context awareness to understand when this is occurring and use the spelt out data to satisfy the schema requirements where applicable.",
+        "structuredDataSchema": structuredDataSchema
+      },
+      "artifactPlan": {
+        "recordingEnabled": true,
+        "videoRecordingEnabled": false,
+        "transcriptPlan": {
+          "enabled": true,
+        }
+      },
+      "hipaaEnabled": false,
+      "startSpeakingPlan": {
+          "waitSeconds": 0.8,
+          "transcriptionEndpointingPlan": {
+              "onPunctuationSeconds": 0.6,
+              "onNoPunctuationSeconds": 1
+          },
+          "smartEndpointingEnabled": false
+      },
+      "silenceTimeoutSeconds": 300,
+      "maxDurationSeconds": 10800,
+      "backgroundSound": "off",
+      "clientMessages": [
+          "conversation-update",
+          "function-call"
+      ],
+      "endCallPhrases": [
+          "goodbye"
+      ],
+      "backgroundDenoisingEnabled": false,
+      "stopSpeakingPlan": {
+          "numWords": 0
+      },
+    })
+  })
   
   console.log(response);
   
-  if (response == null) {
-    console.log("response not okay but made it past data");
-    throw new Error("Vapi gave null response when trying to create an agent");
+  if (!response.ok) {
+    throw new Error(`Request failed with status: ${response.status}`);
   }
 
+  const data = await response.json();
 
-  return response
+  return data
 
 }
+
+function generateStructuredDataSchema(dataCollection: DataField[]) {
+  // Build the "properties" object
+  const properties = dataCollection.reduce((acc, curr) => {
+    acc[curr.fieldName] = {
+      description: curr.fieldDescription,
+      type: curr.valueType,
+    };
+    return acc;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }, {} as Record<string, any>);
+
+  // Collect all the fieldNames as required
+  const requiredFields = dataCollection.map((field) => field.fieldName);
+
+  return {
+    type: "object",
+    properties,
+    required: requiredFields,
+  };
+}
+
+
+
 
 
 export const listAgents = cache(async () => {

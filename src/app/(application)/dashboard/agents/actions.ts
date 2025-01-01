@@ -29,8 +29,9 @@ export async function createAgentAction(formData: FormValues){
     console.log(formData);
     const { firstMessage, voiceOptions, systemPrompt, dataCollection } = formData
 
-        
-    const newAgent = await createAgent(firstMessage, voiceOptions, systemPrompt, dataCollection)
+    assert( dataCollection != undefined);
+
+    const newAgent = await createAgent(firstMessage, voiceOptions, systemPrompt, dataCollection, String(session.tenantId))
 
     assert( newAgent != null);
 
