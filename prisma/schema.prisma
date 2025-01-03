@@ -9,8 +9,10 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  //must add indexes manually here is link to docs: https://planetscale.com/docs/prisma/prisma-best-practices
+  relationMode = "prisma"
 }
 
 model User {
@@ -27,6 +29,7 @@ model User {
   org Org @relation(fields: [tenantId], references: [id])
 
   @@id([id, tenantId])
+  @@index([tenantId])
   @@map("users")
 }
 
@@ -51,14 +54,20 @@ model Org {
 }
 
 model Invite {
-  id        String   @default(uuid())
-  tenantId  String
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
+  id            String   @default(uuid())
+  tenantId      String
+  invitedEmail  String
+  token         String
+  resendEmailId String
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
 
   org Org @relation(fields: [tenantId], references: [id])
 
   @@id([id, tenantId])
+  @@index([tenantId])
+  @@index([resendEmailId])
+  @@index([token])
   @@map("invites")
 }
 
@@ -72,6 +81,7 @@ model Agent {
   calls Call[]
 
   @@id([id, tenantId])
+  @@index([tenantId])
   @@map("agents")
 }
 
@@ -86,17 +96,20 @@ model Call {
   lead Lead?
 
   @@id([id, tenantId])
+  @@index([tenantId])
+  @@index([agentId])
   @@map("calls")
 }
 
 model Lead {
-  id       String @unique @default(uuid())
+  id       String  @unique @default(uuid())
   callId   String? @unique
   tenantId String
 
   call Call? @relation(fields: [callId], references: [id])
-  org  Org  @relation(fields: [tenantId], references: [id])
+  org  Org   @relation(fields: [tenantId], references: [id])
 
   @@id([id, tenantId])
+  @@index([tenantId])
   @@map("leads")
 }

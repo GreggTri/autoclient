@@ -9,7 +9,6 @@ interface user {
     firstName: string | null
     lastName: string | null
     email: string
-    role: string
     isAdmin: boolean
 }
 

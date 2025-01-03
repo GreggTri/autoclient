@@ -19,13 +19,6 @@ export const LoginFormSchema = z.object({
     password: z.string().min(1, { message: 'Password field must not be empty.' }),
 });
 
-export const AddRoleSchema = z.object({
-  newRole: z.string()
-    .min(1, "Role must not be blank")
-    .max(64, "Role must be no more than 64 characters long")
-    .regex(/^[A-Za-z\s]+$/, "Role must only contain letters")
-})
-
 export type AuthFormState =
     {
       errors?: {

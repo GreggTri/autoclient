@@ -13,7 +13,7 @@ export const getOrg = async() => {
     try{
         return await prisma.org.findUnique({
             where: {
-                id: Number(session.tenantId)
+                id: String(session.tenantId)
             },
             select: {
                 id: true,

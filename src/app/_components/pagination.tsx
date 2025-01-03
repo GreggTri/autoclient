@@ -21,6 +21,7 @@ const Pagination = ({count}: {count: number}) => {
     const params = new URLSearchParams(pageParams)
 
     const handlePagination = (type: string) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         type === "prev" ? params.set("page", (page - 1).toString()) : params.set("page", (page + 1).toString())
 
         replace(`${pathname}?${params}`)

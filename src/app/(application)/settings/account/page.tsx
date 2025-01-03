@@ -1,18 +1,18 @@
 'use server'
 
-import { getOrgCompanyName } from "@/app/_data/org";
 import { verifySession } from "@/app/_lib/session";
 import { redirect } from "next/navigation";
 import CompanyNameForm from "./CompanyNameForm";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/app/_components/icons";
+import { getOrg } from "@/app/_data/org";
 
 async function OrgAccountSettingsPage(){
   const session = await verifySession(true)
   if (!session) return redirect('/login');
 
-  const org = await getOrgCompanyName(); //just have a getOrg function
+  const org = await getOrg(); //just have a getOrg function
   console.log(org);
   if(!org) return redirect('/settings/profile');
   

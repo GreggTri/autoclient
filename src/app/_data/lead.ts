@@ -2,7 +2,7 @@ import { cache } from "react";
 import { verifySession } from "../_lib/session";
 import { prisma } from "@/utils/prisma";
 //import { revalidatePath } from "next/cache";
-import { VapiClient } from "@vapi-ai/server-sdk";
+//import { VapiClient } from "@vapi-ai/server-sdk";
 
 //const vapi = new VapiClient({ token: process.env.VAPI_API_KEY });
 
@@ -12,7 +12,7 @@ export const listleads = cache(async () => {
 
     const getLeads = await prisma.lead.findMany({
         where: {
-            'tenantId': Number(session.tenantId)
+            'tenantId': String(session.tenantId)
         }
     })
 

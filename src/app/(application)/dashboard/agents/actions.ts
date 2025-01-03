@@ -51,7 +51,7 @@ export async function deactivateGroup(agentId: string){
 
     try{
 
-        
+    console.log(agentId);        
 
 
     } catch(error){

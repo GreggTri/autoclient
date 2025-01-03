@@ -46,7 +46,7 @@ export const InviteUserEmail = ({
           /> */}
             <Heading className="text-black text-[24px] font-normal text-center p-0 my-[30px] mx-0">
               Join <strong>{companyName}</strong> on{" "}
-              <strong>Happy Client</strong>
+              <strong>Auto Client</strong>
             </Heading>
             <Text className="text-black text-[14px] leading-[24px]">
               <strong>
