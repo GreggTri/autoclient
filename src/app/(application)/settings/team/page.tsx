@@ -51,7 +51,6 @@ const TeamSettingsPage = async ({ searchParams }: {searchParams: Promise<SearchP
                         <tr>
                             <td className='p-2.5'>Name</td>
                             <td className='p-2.5'>Email</td>
-                            <td className='p-2.5'>Role</td>
                             <td className='p-2.5'>Admin</td>
                             <td className='p-2.5'>Action</td>
                             

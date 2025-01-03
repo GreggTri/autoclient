@@ -8,11 +8,12 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 
 import { registerUser } from '@/app/(auth)/register/actions'
-import { useFormState, useFormStatus } from "react-dom"
+import { useFormStatus } from "react-dom"
+import { useActionState } from "react"
 
 
 export default function RegisterPage() {
-  const [state, action] = useFormState(registerUser, undefined)
+  const [state, action] = useActionState(registerUser, undefined)
 
   return (
     <div className="container bg-background grid h-screen w-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">

@@ -2,6 +2,7 @@
 
 import { deleteUser, updateUserAdmin } from './actions';
 import { Icons } from '@/app/_components/icons';
+import toCapitalized from '@/app/_lib/toCapitalized';
 import { Switch } from '@/components/ui/switch';
 
 interface user {
@@ -22,7 +23,9 @@ const User: React.FC<UserProps> = async ({user}: UserProps) => {
         <tr className='cursor-default'>
             {/* Name */}
             <td className='p-2.5'>
-                { (user.firstName == null && user.lastName == null) ? "No Name" : user.firstName + " " + user.lastName}
+                {user.firstName != null ? toCapitalized(user.firstName) : ""}
+                {" "}
+                {user.lastName != null ? toCapitalized(user.lastName) : ""}
             </td>
 
             {/* Email */}
