@@ -13,7 +13,7 @@ import AgentEditFormComponent from './AgentEditFormComponent';
 
 
 
-async function AgentPage({ params }: { params: { agentId: string } }) {
+async function AgentPage({ params }: { params: Promise<{ agentId: string }> }) {
     const session = await verifySession(false) //false means user does not need to be admin to hit endpoint
     if (!session) return null;
     
