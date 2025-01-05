@@ -5,7 +5,6 @@ import { buttonVariants } from '@/components/ui/button';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import TestCallButton from './testCallButton';
-import { verifySession } from '@/app/_lib/session';
 import { getAgentDataVapi } from '@/app/_data/agent';
 import assert from 'assert';
 import AgentEditFormComponent from './AgentEditFormComponent';
@@ -14,8 +13,6 @@ import AgentEditFormComponent from './AgentEditFormComponent';
 
 
 async function AgentPage({ params }: { params: Promise<{ agentId: string }> }) {
-    const session = await verifySession(false) //false means user does not need to be admin to hit endpoint
-    if (!session) return null;
     
     const { agentId } = await params;
 

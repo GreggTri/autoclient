@@ -25,13 +25,6 @@ async function AgentRow({agent}:
         redirect('/')
     }
 
-    // const groupedUsers = await getAttachedUsers(group.attachedUsers)
-    
-    // if (!groupedUsers) {
-    //     revalidatePath(`/dashboard/forms/detail/`)
-    //     redirect('/dashboard/forms')
-    // }
-
     return (
         <TableRow 
         className={cn(agent.isArchived && 'opacity-50' ,'place-content-center border-white/50 cursor-default')}>
