@@ -90,7 +90,7 @@ function LoginButton() {
 
   return (
     <button 
-      className={cn(buttonVariants())} 
+      className={cn(buttonVariants(), 'text-BLACK')} 
       disabled={pending}
       >
       {pending && (

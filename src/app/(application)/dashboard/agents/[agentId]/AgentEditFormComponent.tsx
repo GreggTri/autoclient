@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { toast } from '@/hooks/use-toast'
 import { useRouter } from 'next/navigation'
-import { createAgentAction } from './actions'
+import { updateAgentAction } from './../actions'
 import { Input } from '@/components/ui/input'
 import { Icons } from '@/app/_components/icons'
 
@@ -29,7 +29,15 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>
 
-function AgentFormComponent() {
+interface AgentEditFormProps {
+  agentId: string
+  defaultValues: Partial<FormValues>;
+}
+
+function AgentEditFormComponent({
+  agentId,
+  defaultValues,
+}: AgentEditFormProps) {
 
   const router = useRouter()
   
@@ -39,7 +47,8 @@ function AgentFormComponent() {
       firstMessage: '',
       voiceOptions: 'female',
       systemPrompt: '',
-      dataCollection: []
+      dataCollection: [],
+      ...defaultValues,
     },
   })
 
@@ -53,7 +62,7 @@ function AgentFormComponent() {
   const onSubmit = async (data: FormValues) => {
     try {
         
-      const newGroup = await createAgentAction(data);
+      const newGroup = await updateAgentAction(agentId, data);
       console.log(newGroup);
 
       if( newGroup && 'id' in newGroup){
@@ -86,7 +95,7 @@ function AgentFormComponent() {
     <div className="min-h-screen bg-background text-white flex items-center justify-center">
       <div className="w-full max-w-3xl p-8 space-y-8">
         <h1 className="text-3xl font-semibold tracking-tight">
-          Configure A New Intake AI Agent
+          Edit Your Agent
         </h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -261,7 +270,7 @@ function AgentFormComponent() {
             </div>
 
             <Button type="submit" className="w-full bg-primary text-black hover:bg-primary/90">
-              Create Agent!
+              Update Agent!
             </Button>
           </form>
         </Form>
@@ -270,4 +279,4 @@ function AgentFormComponent() {
   )
 }
 
-export default AgentFormComponent
+export default AgentEditFormComponent

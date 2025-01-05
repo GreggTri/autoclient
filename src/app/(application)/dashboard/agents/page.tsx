@@ -42,12 +42,9 @@ export default async function AgentsPage() {
         <TableCaption>List of Agents</TableCaption>
         <TableHeader>
           <TableRow className="border-white/50">
-            <TableHead className="">Names</TableHead>
-            <TableHead>Next Send Out Date</TableHead>
-            <TableHead className="">Emails Per Group</TableHead>
-            <TableHead className="w-[150px]">Add Emails</TableHead>
-            <TableHead className="w-[150px]">Remove Emails</TableHead>
-            <TableHead className="w-[150px]">Deactivate Group</TableHead>
+            <TableHead className="">Agent Id</TableHead>
+
+            <TableHead className="w-[150px]">Deactivate Agent</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -58,7 +55,9 @@ export default async function AgentsPage() {
             return a.isArchived ? 1 : -1;
           })
           .map((agent) => (
-            <AgentRow key={agent.id} agent={
+            <AgentRow 
+            key={agent.id} 
+            agent={
               {
                 'id': agent.id,
                 //...

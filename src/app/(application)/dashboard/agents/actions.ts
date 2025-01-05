@@ -1,6 +1,6 @@
 'use server'
 
-import { createAgent } from "@/app/_data/agent";
+import { createAgent, updateAgent } from "@/app/_data/agent";
 import { verifySession } from "@/app/_lib/session";
 import { prisma } from "@/utils/prisma";
 import assert from "assert";
@@ -14,7 +14,7 @@ const formSchema = z.object({
     dataCollection: z.array(
       z.object({
         fieldName: z.string().min(1, 'Field Name is required'),
-        valueType: z.enum(['text', 'number', 'datetime', 'email']),
+        valueType: z.enum(['text', 'number', 'datetime', 'email', 'trueFalse']),
         fieldDescription: z.string().min(1, 'Field Description is required'),
       })
     ).optional()
@@ -26,12 +26,11 @@ export async function createAgentAction(formData: FormValues){
     const session = await verifySession(true) //false means user does not need to be admin to hit endpoint
     if (!session) return null;
 
-    console.log(formData);
     const { firstMessage, voiceOptions, systemPrompt, dataCollection } = formData
 
     assert( dataCollection != undefined);
 
-    const newAgent = await createAgent(firstMessage, voiceOptions, systemPrompt, dataCollection, String(session.tenantId))
+    const newAgent = await createAgent(firstMessage, voiceOptions, systemPrompt, dataCollection)
 
     assert( newAgent != null);
 
@@ -43,6 +42,21 @@ export async function createAgentAction(formData: FormValues){
     })
 
     return insertedAgent
+}
+
+export async function updateAgentAction(agentId: string, formData: FormValues){
+    const session = await verifySession(true) //false means user does not need to be admin to hit endpoint
+    if (!session) return null;
+
+    const { firstMessage, voiceOptions, systemPrompt, dataCollection } = formData
+
+    assert( dataCollection != undefined);
+
+    const updatedAgent = await updateAgent(agentId, firstMessage, voiceOptions, systemPrompt, dataCollection)
+
+    assert( updatedAgent != null);
+
+    return updatedAgent
 }
 
 export async function deactivateGroup(agentId: string){
