@@ -42,15 +42,6 @@ const valueTypeMapping: Record<string, string> = {
   trueFalse: "boolean"
 };
 
-// const valueTypeMapping: Record<string, DataField["valueType"]> = {
-//   text: "text",
-//   number: "number",
-//   datetime: "datetime",
-//   email: "email",
-//   trueFalse: "trueFalse",
-// };
-
-
 function generateStructuredDataSchema(dataCollection: DataField[]) {
   // Build the "properties" object
   const properties = dataCollection.reduce((acc, curr) => {
