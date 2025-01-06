@@ -5,7 +5,7 @@ import { buttonVariants } from '@/components/ui/button';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import TestCallButton from './testCallButton';
-import { getAgentDataVapi } from '@/app/_data/agent';
+import { getAgent, getAgentDataVapi } from '@/app/_data/agent';
 import assert from 'assert';
 import AgentEditFormComponent from './AgentEditFormComponent';
 
@@ -19,7 +19,8 @@ async function AgentPage({ params }: { params: Promise<{ agentId: string }> }) {
     if(agentId == null) {
         return <div className='text-red text-xl'>No Agent Found</div>
     }
-
+    const agent = await getAgent(agentId)
+    assert(agent)
     const agentData = await getAgentDataVapi(agentId)
     assert(agentData != null)
     assert(agentData.voiceOptions == "female" || agentData.voiceOptions == "male")
@@ -39,15 +40,17 @@ async function AgentPage({ params }: { params: Promise<{ agentId: string }> }) {
                 </>
             </Link>
             <TestCallButton agentId={agentId}/>
+            <div>
+                <AgentEditFormComponent agentId={agentId} sipURI={agent.sipURI} defaultValues={
+                    {
+                        firstMessage: agentData.firstMessage, 
+                        voiceOptions: agentData.voiceOptions,
+                        systemPrompt: agentData.systemPrompt,
+                        dataCollection: agentData.dataCollection
+                    }
+                }/>
+            </div>
             
-            <AgentEditFormComponent agentId={agentId} defaultValues={
-                {
-                    firstMessage: agentData.firstMessage, 
-                    voiceOptions: agentData.voiceOptions,
-                    systemPrompt: agentData.systemPrompt,
-                    dataCollection: agentData.dataCollection
-                }
-            }/>
         </div>
     )
 }

@@ -31,13 +31,37 @@ export async function createAgentAction(formData: FormValues){
     assert( dataCollection != undefined);
 
     const newAgent = await createAgent(firstMessage, voiceOptions, systemPrompt, dataCollection)
-
     assert( newAgent != null);
+
+    const createdSIPURI = await fetch(`${process.env.VAPI_API_URL}/phone-number`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.VAPI_API_KEY}`
+        },
+        body: JSON.stringify({
+            "provider": "vapi",
+            "sipUri": `sip:${newAgent.id}:AC@sip.vapi.ai`,
+            "assistantId": newAgent.id
+        })
+
+    })
+
+    console.log(createdSIPURI);
+  
+    if (!createdSIPURI.ok) {
+        console.log(await createdSIPURI.json());
+        throw new Error(`Request failed with status: ${createdSIPURI.status}`);
+    }
+
+    const sipURI = await createdSIPURI.json()
 
     const insertedAgent = await prisma.agent.create({
         data: {
             'id': newAgent!.id,
-            'tenantId': String(session.tenantId)
+            'tenantId': String(session.tenantId),
+            'phoneNumberId': sipURI.id,
+            'sipURI': sipURI.sipUri
         }
     })
 

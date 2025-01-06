@@ -59,7 +59,7 @@ function AgentFormComponent() {
       if( newGroup && 'id' in newGroup){
         toast({
           title: "Agent has been created!",
-          description: "Scheduled ${newGroup.emailcount} clients to be emailed!",
+          description: "Your AI Agent is Ready",
           variant: "destructive",
           className: "bg-green-500 border-none"
         })

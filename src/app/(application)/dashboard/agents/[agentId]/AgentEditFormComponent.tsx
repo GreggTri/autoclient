@@ -31,11 +31,13 @@ type FormValues = z.infer<typeof formSchema>
 
 interface AgentEditFormProps {
   agentId: string
+  sipURI: string,
   defaultValues: Partial<FormValues>;
 }
 
 function AgentEditFormComponent({
   agentId,
+  sipURI,
   defaultValues,
 }: AgentEditFormProps) {
 
@@ -92,11 +94,14 @@ function AgentEditFormComponent({
   }
   
   return (
-    <div className="min-h-screen bg-background text-white flex items-center justify-center">
+    <div className="min-h-screen bg-background text-white flex items-center justify-center mt-10">
       <div className="w-full max-w-3xl p-8 space-y-8">
         <h1 className="text-3xl font-semibold tracking-tight">
           Edit Your Agent
         </h1>
+        <div className='text-sm'>
+          Agent SIP URI: <b>{sipURI}</b>
+        </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             

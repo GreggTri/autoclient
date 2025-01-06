@@ -72,10 +72,11 @@ model Invite {
 }
 
 model Agent {
-  id         String  @unique
-  tenantId   String
-  //sipURI     String  @unique #TODO ADD THIS AT SOME POINT SOON
-  isArchived Boolean @default(false)
+  id            String  @unique
+  tenantId      String
+  phoneNumberId String
+  sipURI        String  @unique
+  isArchived    Boolean @default(false)
 
   org Org @relation(fields: [tenantId], references: [id])
 
