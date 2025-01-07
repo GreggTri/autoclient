@@ -25,7 +25,8 @@ const formSchema = z.object({
 export async function createAgentAction(formData: FormValues){
     const session = await verifySession(true) //false means user does not need to be admin to hit endpoint
     if (!session) return null;
-
+    if(!session.subscriptionId) throw new Error("Set Up Billing First")
+        
     const { firstMessage, voiceOptions, systemPrompt, dataCollection } = formData
 
     assert( dataCollection != undefined);

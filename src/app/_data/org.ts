@@ -18,6 +18,7 @@ export const getOrg = async() => {
             select: {
                 id: true,
                 companyName: true,
+                stripeSubscriptionId: true
             }
         })
 

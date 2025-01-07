@@ -25,6 +25,12 @@ async function OrgAccountSettingsPage(){
           <CompanyNameForm companyName={org.companyName}/>
         </div>
         
+
+        {org.stripeSubscriptionId ? 
+          <div className="my-6">
+            
+          </div>
+        :
         <div className="my-6">
           <span>After entering your firms name, <br />Please activate your monthly subscription</span>
           <Button className="text-white w-full my-4 py-6 bg-green-500 hover:bg-green-600">
@@ -33,6 +39,8 @@ async function OrgAccountSettingsPage(){
             </Link>
           </Button>
         </div>
+        }
+        
 
         {/* add a contact button to cancel subcription etc later */}
       </div>

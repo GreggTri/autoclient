@@ -81,7 +81,8 @@ export async function verifySession(adminOnly: boolean) {
         expiresAt: authSession.expiresAt, 
         userId: String(authSession.userId), 
         isAdmin: authSession.isAdmin, 
-        tenantId: authSession.tenantId
+        tenantId: authSession.tenantId,
+        subscriptionId: authSession.stripeSubscriptionId
     };
 }
 
