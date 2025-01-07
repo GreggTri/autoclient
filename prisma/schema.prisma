@@ -112,8 +112,8 @@ model Call {
 }
 
 model Lead {
-  id       String  @unique @default(uuid())
-  callId   String? @unique
+  id       String @unique @default(uuid())
+  callId   String @unique
   tenantId String
   data     Json
 
@@ -123,4 +123,19 @@ model Lead {
   @@id([id, tenantId])
   @@index([tenantId])
   @@map("leads")
+}
+
+model contactForm {
+  id      String @id @default(uuid())
+  name    String
+  email   String
+  company String
+  subject String
+  message String @db.LongText
+}
+
+model Feedback {
+  id       String @id @default(uuid())
+  tenantId String @unique
+  message  String @db.LongText
 }
