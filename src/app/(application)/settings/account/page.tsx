@@ -28,7 +28,7 @@ async function OrgAccountSettingsPage(){
         <div className="my-6">
           <span>After entering your firms name, <br />Please activate your monthly subscription</span>
           <Button className="text-white w-full my-4 py-6 bg-green-500 hover:bg-green-600">
-            <Link href={`${process.env.STRIPE_PAYMENT_LINK}`} target="_blank" className="flex flex-row justify-center items-center font-bold text-base">
+            <Link href={`${process.env.STRIPE_PAYMENT_LINK}?client_reference_id=${org.id}`} target="_blank" className="flex flex-row justify-center items-center font-bold text-base">
               Activate Subscription<Icons.chevronRight width={25} height={25}/>
             </Link>
           </Button>
