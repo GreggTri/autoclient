@@ -165,3 +165,20 @@ export const getUsers = cache(async() => {
         console.log(error);
     }
 })
+
+
+
+export const getInvitedUserByToken = async(tokenId: string) => {
+
+    const getInvitedData = await prisma.invite.findUnique({
+        'where': {
+            'token': tokenId
+        }
+    })
+
+    if(getInvitedData == null){
+        return null
+    }
+
+    return getInvitedData
+}
