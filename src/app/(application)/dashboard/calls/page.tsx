@@ -8,14 +8,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { listAgents } from "@/app/_data/agent";
 import CallRow from "./CallRow";
+import { listCalls } from "@/app/_data/call";
 
 
-export default async function callssPage() {
-  const calls = await listAgents();
+export default async function callsPage() {
+  const calls = await listCalls();
   if (!calls) {
-    return <div>Agents not found or not available.</div>;
+    return <div>Calls not found or not available.</div>;
   }
 
 
@@ -40,19 +40,15 @@ export default async function callssPage() {
         </TableHeader>
 
         <TableBody className="">
-          {calls.sort((a, b) => {
-            // Groups with isArchived false should come first
-            if (a.isArchived === b.isArchived) return 0;
-            return a.isArchived ? 1 : -1;
-          })
-          .map((call) => (
+          {calls.map((call) => (
             <CallRow 
             key={call.id} 
             call={
               {
                 'id': call.id,
-                //...
-                'isArchived': call.isArchived
+                leadId: call.lead!.id,
+                durationSeconds: call.durationSeconds,
+                timestamp: call.timestamp
               }
             }/>
           ))}

@@ -1,7 +1,7 @@
 'use server'
 
 import { getInvitedUserByToken } from "@/app/_data/user";
-import RegisterUserForm from "./registerUserForm";
+import RegisterUserForm from "./RegisterUserForm";
 import { deactivateInvite } from "./action";
 
 function isValidHex(param: string) {

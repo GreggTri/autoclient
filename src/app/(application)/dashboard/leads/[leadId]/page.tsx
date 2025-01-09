@@ -4,17 +4,22 @@ import { Icons } from '@/app/_components/icons';
 import { buttonVariants } from '@/components/ui/button';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { getLead } from '@/app/_data/lead';
 
 
 
-async function CallPage({ params }: { params: Promise<{ callId: string }> }) {
+
+export default async function LeadPage({ params }: { params: Promise<{ leadId: string }> }) {
     
-    const { callId } = await params;
+    const { leadId } = await params;
 
-    if(callId == null) {
-        return <div className='text-red text-xl'>No Call Found</div>
+    if(leadId == null) {
+        return <div className='text-red text-xl'>No Lead Found</div>
     }
-    
+
+    const leadData = await getLead(leadId)
+    console.log(leadData);
+
     return (
         <div>
             <Link
@@ -30,11 +35,6 @@ async function CallPage({ params }: { params: Promise<{ callId: string }> }) {
                 </>
             </Link>
             
-            <div>
-
-            </div>
         </div>
     )
 }
-
-export default CallPage

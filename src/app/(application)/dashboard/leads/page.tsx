@@ -1,15 +1,57 @@
 'use server'
 
-const LeadsPage = async() => {
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import LeadRow from "./LeadRow";
 
 
-    return (
-        <div>
-            Leads Page
-        </div>
-    )
+export default async function leadsPage() {
+  const leads = await listLeads();
+  if (!leads) {
+    return <div>Leads not found or not available.</div>;
+  }
+
+
+  if(leads.length === 0){
+    return <div>No leads Exist Yet.</div>;
+  }
+  
+  return (
+    <div className="mx-[6.5%] my-20 bg-[#1e1e1e] rounded-md p-2">
+      <div className="flex justify-between my-2">
+        
+      </div>
+      <Table className="">
+        <TableCaption>List of leads</TableCaption>
+        <TableHeader>
+          <TableRow className="border-white/50">
+            <TableHead className="">Call Id</TableHead>
+            <TableHead className="">Lead Generated</TableHead>
+            <TableHead className="">Call Date/Time</TableHead>
+            <TableHead className="">Minutes Used</TableHead>
+          </TableRow>
+        </TableHeader>
+
+        <TableBody className="">
+          {leads.map((lead) => (
+            <LeadRow 
+            key={lead.id} 
+            lead={
+              {
+                'id': lead.id,
+                //...
+                'isArchived': lead.isArchived
+              }
+            }/>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  )
 }
-
-
-
-export default LeadsPage

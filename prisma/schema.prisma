@@ -110,10 +110,12 @@ model Call {
 }
 
 model Lead {
-  id       String @unique @default(uuid())
-  callId   String @unique
-  tenantId String
-  data     Json
+  id        String   @unique @default(uuid())
+  callId    String   @unique
+  tenantId  String
+  data      Json
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 
   call Call? @relation(fields: [callId], references: [id])
   org  Org   @relation(fields: [tenantId], references: [id])
@@ -130,10 +132,15 @@ model contactForm {
   company String
   subject String
   message String @db.LongText
+
+  createdAt DateTime @default(now())
 }
 
 model Feedback {
-  id       String @id @default(uuid())
-  tenantId String @unique
-  message  String @db.LongText
+  id        String   @default(uuid())
+  tenantId  String
+  message   String   @db.LongText
+  createdAt DateTime @default(now())
+
+  @@id([id, tenantId])
 }

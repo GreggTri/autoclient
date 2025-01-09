@@ -8,19 +8,35 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
 
+function formatDuration(seconds: number): string {
+    const minutes = Math.floor(seconds / 60); // Whole minutes
+    const remainingSeconds = seconds % 60;   // Remaining seconds
+  
+    const minutePart = minutes > 0 ? `${minutes} Minute${minutes > 1 ? 's' : ''}` : '';
+    const secondPart = remainingSeconds > 0 ? `${remainingSeconds} Second${remainingSeconds > 1 ? 's' : ''}` : '';
+  
+    // Combine parts, ensuring proper formatting (e.g., no extra spaces)
+    return [minutePart, secondPart].filter(Boolean).join(' ');
+}
 
-async function AgentRow({call}: 
+
+
+export default async function CallRow({call}: 
 {call: {
     id: string;
-    
-    isArchived: boolean
+    leadId: string;
+    durationSeconds: number;
+    timestamp: number;
 }}) {
     const {isAuth} = await verifySession(true)
-
+    
     if (!isAuth) {
         revalidatePath('/')
         redirect('/')
     }
+
+    const datetime = new Date(call.timestamp)
+    const formattedDate = datetime.toISOString();
 
     return (
         <TableRow 
@@ -34,21 +50,19 @@ async function AgentRow({call}:
 
             {/* Lead Generated From Call*/}
             <TableCell >
-                
+                {call.leadId ? "Yes" : "No"}
             </TableCell>
             
             {/* Time Call Happened */}
             <TableCell >
-                
+                {formattedDate}
             </TableCell>
 
-            {/* Minutes.Seconds Used */}
+            {/* Minute(s) Second(s) Used */}
             <TableCell> 
-                
+                {formatDuration(call.durationSeconds)}
             </TableCell>
 
         </TableRow>
     )
 }
-
-export default AgentRow

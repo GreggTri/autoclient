@@ -1,6 +1,9 @@
+'use server'
+
 import { cache } from "react";
 import { verifySession } from "../_lib/session";
 import { prisma } from "@/utils/prisma";
+import assert from "assert";
 //import { revalidatePath } from "next/cache";
 //import { VapiClient } from "@vapi-ai/server-sdk";
 
@@ -13,6 +16,10 @@ export const listleads = cache(async () => {
     const getLeads = await prisma.lead.findMany({
         where: {
             'tenantId': String(session.tenantId)
+        },
+        'select': {
+            'id': true,
+            'createdAt': true
         }
     })
 
@@ -25,10 +32,26 @@ export const listleads = cache(async () => {
 })
 
 
-export const getLead = async () => {
+export const getLead = async (leadId: string) => {
     const session = await verifySession(false) //false means user does not need to be admin to hit endpoint
     if (!session) return null;
 
+    const lead = await prisma.lead.findUnique({
+        'where': {
+            'id': leadId,
+            'tenantId': String(session.tenantId),
+        },
+        'select': {
+            'id': true,
+            'callId': true,
+            'data': true,
+            'createdAt': true
+        }
+    })
+
+    assert(lead)
+
+    return lead
 
 }
 
