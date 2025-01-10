@@ -9,7 +9,7 @@ import assert from "assert";
 
 //const vapi = new VapiClient({ token: process.env.VAPI_API_KEY });
 
-export const listleads = cache(async () => {
+export const listLeads = cache(async () => {
     const session = await verifySession(false) //false means user does not need to be admin to hit endpoint
     if (!session) return null;
 

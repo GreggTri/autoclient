@@ -37,3 +37,38 @@ export const listCalls = cache(async () => {
 
     return callList
 }) 
+
+
+
+export const getCall = async (callId: string) => {
+    const session = await verifySession(false) //false means user does not need to be admin to hit endpoint
+    if (!session) return null;
+
+    const call = await prisma.call.findUnique({
+        'where': {
+            'id': callId,
+            'tenantId': String(session.tenantId),
+        },
+        'select': {
+            'id': true,
+            'agentId': true,
+            'durationSeconds': true,
+            'recording': true,
+            'summary': true,
+            'transcript': true,
+            'timestamp': true,
+            'cost': false,
+            'lead': {
+                'select': {
+                    'id': true
+                }
+            },
+            'stripeBilledCall': false
+        }
+    })
+
+    assert(call)
+
+    return call
+
+}

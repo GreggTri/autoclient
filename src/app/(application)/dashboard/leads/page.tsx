@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import LeadRow from "./LeadRow";
-
+import { listLeads } from "@/app/_data/lead";
 
 export default async function leadsPage() {
   const leads = await listLeads();
@@ -31,10 +31,8 @@ export default async function leadsPage() {
         <TableCaption>List of leads</TableCaption>
         <TableHeader>
           <TableRow className="border-white/50">
-            <TableHead className="">Call Id</TableHead>
-            <TableHead className="">Lead Generated</TableHead>
-            <TableHead className="">Call Date/Time</TableHead>
-            <TableHead className="">Minutes Used</TableHead>
+            <TableHead className="">Lead Id</TableHead>
+            <TableHead className="">Lead Created At</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -45,8 +43,7 @@ export default async function leadsPage() {
             lead={
               {
                 'id': lead.id,
-                //...
-                'isArchived': lead.isArchived
+                'createdAt': lead.createdAt
               }
             }/>
           ))}
