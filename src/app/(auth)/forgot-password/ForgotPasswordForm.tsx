@@ -2,8 +2,8 @@
 
 import React from 'react'
 import { Input } from "@/components/ui/input"
-import { Form, useForm } from 'react-hook-form'
-import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { useForm } from 'react-hook-form'
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { toast } from '@/hooks/use-toast'
@@ -95,9 +95,3 @@ function ForgotPasswordForm() {
 }
 
 export default ForgotPasswordForm
-
-
-
-
-
-
