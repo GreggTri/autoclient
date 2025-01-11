@@ -78,8 +78,8 @@ export const sendUserInvite = async(formData: FormData): Promise<void> => {
         from: 'AutoClient <onboarding@updates.getautoclient.com>',
         to: [newUserEmail],
         subject: `${getUser.firstName} ${getUser.lastName} invited you to Auto Client for ${getOrg.companyName}`,
-        react: InviteUserEmail({inviteLink: `${process.env.AUTOCLIENT_URL}/org/user/register/${newToken}`, invitedByEmail: getUser.email, firstName: getUser.firstName, lastName: getUser.lastName, companyName: getOrg.companyName}), // figure this out still and add info props some how.
-      });
+        react: InviteUserEmail({inviteLink: `${process.env.AUTOCLIENT_URL}/register/${newToken}`, invitedByEmail: getUser.email, firstName: getUser.firstName, lastName: getUser.lastName, companyName: getOrg.companyName}), // figure this out still and add info props some how.
+    });
 
     if (!emailResponse){
         throw new Error("Resend failed to send email!")

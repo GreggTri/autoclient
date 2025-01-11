@@ -20,14 +20,14 @@ export const LoginFormSchema = z.object({
 });
 
 export type AuthFormState =
-    {
-      errors?: {
-        email?: string[];
-        password?: string[];
-      };
-      message?: string;
-    }
-  | undefined | null;
+  {
+    errors?: {
+      email?: string[];
+      password?: string[];
+    };
+    message?: string;
+  }
+| undefined | null;
 
 export const updateProfileNameForm = z.object({
   firstName: z.string()
@@ -57,3 +57,23 @@ export type SessionPayload = {
   tenantId: string;
   stripeSubscriptionId: string | null;
 };
+
+export type ResetPasswordState =
+  {
+    errors?: {
+      password?: string[];
+      confirmPassword?: string[];
+    };
+    message?: string;
+  }
+| undefined | null;
+
+
+export type ForgotPasswordState =
+  {
+    errors?: {
+      email?: string[];
+    };
+    message?: string;
+  }
+| undefined | null;

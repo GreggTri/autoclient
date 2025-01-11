@@ -43,11 +43,12 @@ model Org {
   updatedAt              DateTime @updatedAt
   createdAt              DateTime @default(now())
 
-  invites Invite[]
-  users   User[]
-  agents  Agent[]
-  calls   Call[]
-  leads   Lead[]
+  invites   Invite[]
+  users     User[]
+  agents    Agent[]
+  calls     Call[]
+  leads     Lead[]
+  ResetPass ResetPass[]
 
   @@map("orgs")
 }
@@ -59,6 +60,7 @@ model Invite {
   token         String   @unique
   resendEmailId String
   isActive      Boolean  @default(true)
+  //expireAt      DateTime
   createdAt     DateTime @default(now())
 
   org Org @relation(fields: [tenantId], references: [id])
@@ -67,6 +69,24 @@ model Invite {
   @@index([tenantId])
   @@index([resendEmailId])
   @@map("invites")
+}
+
+model ResetPass {
+  id            String   @default(uuid())
+  tenantId      String
+  userId        String
+  token         String   @unique
+  resendEmailId String
+  isActive      Boolean  @default(true)
+  expireAt      DateTime
+  createdAt     DateTime @default(now())
+
+  org Org @relation(fields: [tenantId], references: [id])
+
+  @@id([id, tenantId])
+  @@index([tenantId])
+  @@index([resendEmailId])
+  @@map("ResetPass")
 }
 
 model Agent {
