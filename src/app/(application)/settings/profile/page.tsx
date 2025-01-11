@@ -1,4 +1,4 @@
-'use server'
+import 'server-only'
 
 import { fetchUser } from "@/app/_data/user";
 import UpdateProfileForm from "./form";

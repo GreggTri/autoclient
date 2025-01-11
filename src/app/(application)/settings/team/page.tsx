@@ -1,4 +1,4 @@
-'use server'
+import 'server-only'
 
 import { fetchUsers } from "@/app/_data/user";
 import Search from "./search";

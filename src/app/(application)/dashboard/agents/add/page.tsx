@@ -1,4 +1,4 @@
-'use server'
+import 'server-only'
 
 import AgentFormComponent from '../AgentFormComponent'
 import { Icons } from '@/app/_components/icons';

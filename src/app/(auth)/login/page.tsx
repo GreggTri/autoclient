@@ -37,6 +37,14 @@ export default function LoginPage() {
           </p>
         </div>
         <UserAuthForm />
+        <p className="px-8 text-center text-sm text-gray-400">
+          <Link
+            href="/forgot-password"
+            className="hover:text-[#f4e300] underline underline-offset-4"
+          >
+            Forgot password?
+          </Link>
+        </p>
         <p className="px-8 text-center text-sm text-muted-foreground">
           <Link
             href="/register"

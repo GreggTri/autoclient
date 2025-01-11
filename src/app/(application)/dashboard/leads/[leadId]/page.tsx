@@ -1,4 +1,4 @@
-'use server'
+import 'server-only'
 
 import Link from 'next/link';
 import { getLead } from '@/app/_data/lead';

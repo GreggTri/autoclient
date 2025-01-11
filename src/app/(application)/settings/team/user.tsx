@@ -1,4 +1,4 @@
-'use server'
+import 'server-only'
 
 import { deleteUser, updateUserAdmin } from './actions';
 import { Icons } from '@/app/_components/icons';

@@ -1,4 +1,4 @@
-'use server'
+import 'server-only'
 
 import { verifySession } from "@/app/_lib/session";
 import { redirect } from "next/navigation";

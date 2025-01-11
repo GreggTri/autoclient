@@ -1,4 +1,4 @@
-'use server'
+import 'server-only'
 
 import { TableCell, TableRow } from '@/components/ui/table'
 import React from 'react'

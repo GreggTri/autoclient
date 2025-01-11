@@ -1,4 +1,4 @@
-'use server'
+import 'server-only'
 
 import { Icons } from '@/app/_components/icons';
 import { buttonVariants } from '@/components/ui/button';
