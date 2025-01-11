@@ -1,5 +1,6 @@
 'use server'
 
+import 'server-only'
 import { createAgent, updateAgent } from "@/app/_data/agent";
 import { verifySession } from "@/app/_lib/session";
 import { prisma } from "@/utils/prisma";

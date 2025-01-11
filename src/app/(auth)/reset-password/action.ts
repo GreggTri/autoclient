@@ -1,5 +1,6 @@
 'use server'
 
+import 'server-only'
 import { ResetPasswordState } from "@/app/_lib/definitions";
 import { redirect } from "next/navigation";
 import { z } from "zod"

@@ -1,5 +1,6 @@
 'use server'
 
+import 'server-only'
 import bcrypt from 'bcrypt';
 
 import { AuthFormState, RegisterFormSchema } from '@/app/_lib/definitions'

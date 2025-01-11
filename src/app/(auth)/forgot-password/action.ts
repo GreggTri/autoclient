@@ -1,3 +1,6 @@
+'use server'
+
+import 'server-only'
 import { generateToken } from "@/app/_lib/tokens"
 import { prisma } from "@/utils/prisma"
 import { z } from "zod"

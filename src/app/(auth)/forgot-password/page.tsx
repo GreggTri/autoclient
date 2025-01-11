@@ -1,4 +1,4 @@
-import React from 'react'
+'use server'
 
 import Link from "next/link"
 import { ArrowLeft } from 'lucide-react'
