@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import ForgotPasswordForm from './ForgotPasswordForm'
 
-export default function forgotPasswordPage() {
+export default async function forgotPasswordPage() {
     
     return (
         <div className="flex h-screen w-screen flex-col justify-center items-center bg-black text-white">
