@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useActionState } from 'react'
+import React, { useActionState, useEffect } from 'react'
 import { Input } from "@/components/ui/input"
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -8,10 +8,31 @@ import { updateUserResetPassword } from './action'
 import { Label } from '@/components/ui/label'
 import { Icons } from '@/app/_components/icons'
 import { useFormStatus } from 'react-dom'
+import { toast } from '@/hooks/use-toast'
 
 export default function ResetPasswordForm({token}: {token: string}) {
     const [state, action] = useActionState(updateUserResetPassword, undefined)
 
+    useEffect(() => {
+      if (state?.success) {
+        // Perform your function here after the action is completed successfully
+        console.log('Password reset was successful!');
+        // Example: Redirect to login page or show success message
+        window.location.href = '/login';
+      }
+  
+      if (state?.success === false && state?.errors === null) {
+        // Handle errors here, e.g., show a toast or log the error
+
+        toast({
+          title: "Could not reset password!",
+          description: "Something went wrong! Please try again later and/or contact support!",
+          variant: "destructive",
+          className: "bg-red-500 border-none"
+        })
+      }
+    }, [state]);
+    
     return (
         <form action={action} className="space-y-4">
           <div className="space-y-2">

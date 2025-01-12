@@ -16,7 +16,7 @@ export default async function resetPasswordPage({ params }: { params: Promise<{ 
     const isTokenValid = await checkToken(token)
 
     if(isTokenValid === false){
-      return <div className="text-red text-xl justify-center items-center">Reset password session is invalid or expired.</div>
+      return <div className="flex h-screen w-screen text-red-500 text-xl justify-center items-center">Reset password session is invalid or expired.</div>
     }
     
     return (

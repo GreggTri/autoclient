@@ -60,6 +60,7 @@ export type SessionPayload = {
 
 export type ResetPasswordState =
   {
+    success?: boolean, 
     errors?: {
       password?: string[];
       confirmPassword?: string[];

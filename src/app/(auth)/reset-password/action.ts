@@ -2,7 +2,6 @@
 
 import 'server-only'
 import { ResetPasswordState } from "@/app/_lib/definitions";
-import { redirect } from "next/navigation";
 import { z } from "zod"
 import bcrypt from 'bcrypt';
 import { prisma } from "@/utils/prisma";
@@ -36,6 +35,7 @@ export async function updateUserResetPassword(state: ResetPasswordState, formDat
     
     if (!validationResult.success) {
         return {
+            success: false,
             errors: validationResult.error.flatten().fieldErrors
         }
     }
@@ -90,13 +90,15 @@ export async function updateUserResetPassword(state: ResetPasswordState, formDat
             }
         })
 
-        redirect('/login')
+        return {
+            success: true
+        }
     }
     catch(error)  {
         console.log(error);
 
         return {
-            message: "Something went wrong! contact support!"
+            success: false
         }
     }
 }
