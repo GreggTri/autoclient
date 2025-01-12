@@ -50,6 +50,8 @@ export async function updateUserResetPassword(state: ResetPasswordState, formDat
             },
             select: {
                 'id': true,
+                'userId': true,
+                'tenantId': true,
                 'expireAt': true,
                 'isActive': true
             }
@@ -69,7 +71,8 @@ export async function updateUserResetPassword(state: ResetPasswordState, formDat
 
         const updatedUser = await prisma.user.update({
             'where': {
-                'id': getUserIdFromToken.id
+                'id': getUserIdFromToken.userId,
+                'tenantId': getUserIdFromToken.tenantId
             },
             data: {
                 'password': hashedPassword
