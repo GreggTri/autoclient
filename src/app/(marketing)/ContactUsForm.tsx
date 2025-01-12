@@ -7,10 +7,11 @@ import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/hooks/use-toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { submitContactForm } from './actions'
+import { Icons } from '../_components/icons'
 
 
 const formSchema = z.object({
@@ -24,6 +25,8 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>
 
 function ContactUsForm() {
+
+    const [pending, setPending] = useState(false)
 
     const router = useRouter()
 
@@ -42,32 +45,36 @@ function ContactUsForm() {
     const onSubmit = async (data: FormValues) => {
         try {
             
-          const formSubmission = await submitContactForm(data);
-          console.log(formSubmission);
-    
-          if( formSubmission && 'id' in formSubmission){
-            toast({
-              title: "Form has been submitted!",
-              description: "We'll get back to you as soon as we can!",
-              variant: "destructive",
-              className: "bg-green-500 border-none"
-            })
-    
-            router.refresh()
-          } else {
-            throw new Error("Failed to create Schedule")
-          }
+            setPending(true)
+            const formSubmission = await submitContactForm(data);
+            console.log(formSubmission);
+        
+            if( formSubmission && 'id' in formSubmission){
+
+                setPending(false)
+
+                toast({
+                title: "Form has been submitted!",
+                description: "We'll get back to you as soon as we can!",
+                variant: "destructive",
+                className: "bg-green-500 border-none"
+                })
+        
+                router.refresh()
+            } else {
+                throw new Error("Failed to create Schedule")
+            }
               
         } catch (error) {
           
-          console.log(error)
-    
-          toast({
-            title: "Shoot! Sorry about that.", 
-            description: "Something went wrong! Please email us directly :)",
-            variant: "destructive",
-            className: "bg-red-500 border-none"
-          })
+            console.log(error)
+            setPending(false)
+            toast({
+                title: "Shoot! Sorry about that.", 
+                description: "Something went wrong! Please email us directly :)",
+                variant: "destructive",
+                className: "bg-red-500 border-none"
+            })
         }
     }
     return (
@@ -161,7 +168,12 @@ function ContactUsForm() {
                 
 
                 <Button type="submit" className="w-full bg-primary text-black hover:bg-primary/90">
-                Send Message
+                {pending ?
+                    <Icons.spinner className="animate-spin"/>
+                :
+                    "Send Message"
+                }
+                
                 </Button>
             </form>
             </Form>
