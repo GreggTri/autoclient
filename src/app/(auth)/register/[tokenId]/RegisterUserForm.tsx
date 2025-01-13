@@ -13,7 +13,7 @@ import { useActionState } from "react"
 import { registerInvitedUser } from "./action"
 
 
-export default function RegisterUserForm({ email, tenantId }: { email: string, tenantId: string}) {
+export default function RegisterUserForm({ token, email, tenantId }: {token: string, email: string, tenantId: string}) {
   const [state, action] = useActionState(registerInvitedUser, undefined)
 
   return (
@@ -55,8 +55,8 @@ export default function RegisterUserForm({ email, tenantId }: { email: string, t
             <form action={action} >
               <div className="grid gap-2">
                 <div className="grid gap-1">
-
-                    <Input name="tenantId" value={tenantId} hidden/>
+                    <input name="token" defaultValue={token} hidden={true}/>
+                    <input name="tenantId" defaultValue={tenantId} hidden={true}/>
 
                     <Label className="sr-only" htmlFor="email">
                         Email
@@ -64,7 +64,8 @@ export default function RegisterUserForm({ email, tenantId }: { email: string, t
                     <Input
                         id="email"
                         name="email"
-                        value={email}
+                        defaultValue={email}
+                        className="cursor-default"
                         type="email"
                         readOnly
                     />

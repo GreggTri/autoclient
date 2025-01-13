@@ -1,6 +1,5 @@
 'use server'
 
-import 'server-only'
 import bcrypt from 'bcrypt';
 
 import { AuthFormState, RegisterFormSchema } from '@/app/_lib/definitions'
@@ -18,7 +17,7 @@ export async function registerInvitedUser(state: AuthFormState, formData: FormDa
     })
 
     const tenantId = formData.get('tenantId') as string
-
+    const token = formData.get('token') as string
     
     if (!validationResult.success) {
         return {
@@ -68,6 +67,17 @@ export async function registerInvitedUser(state: AuthFormState, formData: FormDa
             }
 
         })
+
+        const invalidatedToken = await prisma.invite.update({
+            'where':{
+                'token': token
+            },
+            data: {
+                'isActive': false
+            }
+        })
+        
+        assert(invalidatedToken)
         
         //we add these too the session because we have viewing priveleges of certain routes via admin 
         //and we must contain/filter all queries via the tenantId
@@ -83,7 +93,7 @@ export async function registerInvitedUser(state: AuthFormState, formData: FormDa
     }
 
 
-    redirect('/settings/account')
+    redirect('/dashboard')
 
 
 }

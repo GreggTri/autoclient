@@ -6,7 +6,7 @@ import Pagination from "@/app/_components/pagination";
 import User from "./user";
 import { Icons } from "@/app/_components/icons";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { sendUserInvite } from "./actions";
+import SendInviteForm from './SendInviteForm';
 
 interface user {
   id: string
@@ -35,13 +35,8 @@ const TeamSettingsPage = async ({ searchParams }: {searchParams: Promise<SearchP
                     <Search placeholder="Search..."/>
                     <Popover>
                         <PopoverTrigger className='flex flex-row items-center gap-1 p-2 bg-primary rounded-md justify-center text-sm text-BLACK'><Icons.add width={20} height={20}/>Invite</PopoverTrigger>
-                        <PopoverContent className='bg-black'>
-                            <div >
-                                <form action={sendUserInvite} className='flex flex-row gap-2'>
-                                    <input type="text" name='email' className="rounded-md px-1 bg-BLACK" placeholder="Email"/>
-                                    <button className='flex flex-row justify-center items-center bg-primary text-BLACK rounded-md px-1 py-1 gap-1'>Send<Icons.Send width={15} height={15}/></button>
-                                </form>
-                            </div>
+                        <PopoverContent className='flex bg-black w-full border-none'>
+                            <SendInviteForm/>
                         </PopoverContent>
                     </Popover>
                 </div>

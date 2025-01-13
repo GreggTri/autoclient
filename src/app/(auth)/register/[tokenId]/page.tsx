@@ -30,28 +30,32 @@ export default async function RegisterInvitedUserPage({ params }: { params: Prom
     const { tokenId } = await params;
 
     if(tokenId == null) {
-        return <div className='text-red text-xl'>No Invited User Found</div>
+        return <div className='text-red-500 text-xl'>No Invited User Found</div>
     }
 
     if(!isValidHex(tokenId)){
-        return <div className='text-red text-xl'>No Invited User Found</div>
+        return <div className='text-red-500 text-xl'>No Invited User Found</div>
     }
 
     const invitedUser = await getInvitedUserByToken(tokenId)
 
     if(invitedUser == null) {
-        return <div className='text-red text-xl'>No Invited User Found</div>
+        return <div className='text-red-500 text-xl'>No Invited User Found</div>
     }
 
     if(is15DaysOrMore(invitedUser.createdAt)){
         await deactivateInvite(invitedUser.token)
-        return <div className='text-red text-xl'>Invite is expired. Please try inviting again.</div>
+        return <div className="flex h-screen w-screen text-red-500 text-xl justify-center items-center">Invite is expired or no longer active. Please try inviting again or logging in.</div>
+    }
+
+    if(invitedUser.isActive == false){
+        return <div className="flex h-screen w-screen text-red-500 text-xl justify-center items-center">Invite is expired or no longer active. Please try inviting again or logging in.</div>
     }
 
 
 
 
     return (
-        <RegisterUserForm email={invitedUser.invitedEmail} tenantId={invitedUser.tenantId}/>
+        <RegisterUserForm token={tokenId} email={invitedUser.invitedEmail} tenantId={invitedUser.tenantId}/>
     )
 }
