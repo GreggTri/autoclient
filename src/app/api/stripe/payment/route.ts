@@ -92,6 +92,7 @@ export async function POST(request: Request) {
   try {
     const data = await request.json() as CheckoutSession
 
+    console.log(data);
 
     const getSub = await stripe.subscriptions.update(
       data.object.subscription,
@@ -116,7 +117,9 @@ export async function POST(request: Request) {
       data: {
         'stripeCustomerId': data.object.customer,
         'stripeSubscriptionId': getSub.id,
-        'stripeCurrentPeriodEnd': getSub.current_period_end
+        'stripeCurrentPeriodEnd': getSub.current_period_end,
+        'stripeStatus': "ACTIVE"
+        
       } 
     })
 

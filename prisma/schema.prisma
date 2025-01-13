@@ -40,6 +40,7 @@ model Org {
   stripeCustomerId       String?  @map(name: "stripe_customer_id")
   stripeSubscriptionId   String?  @map(name: "stripe_subscription_id")
   stripeCurrentPeriodEnd Int?     @map(name: "stripe_current_period_end")
+  stripeStatus           String?
   updatedAt              DateTime @updatedAt
   createdAt              DateTime @default(now())
 
