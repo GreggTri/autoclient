@@ -10,14 +10,14 @@ export async function POST(request: Request) {
   try {
     const data = await request.json()
 
-    console.log(data);
+    console.log(data.data.object);
 
     const getOrg = await prisma.org.update({
       where: {
-        id: data.object.metadata.tenantId
+        id: data.data.object.metadata.tenantId
       },
       data: {
-        'stripeCustomerId': data.object.customer,
+        'stripeCustomerId': data.data.object.customer,
         'stripeSubscriptionId': null,
         'stripeCurrentPeriodEnd': null,
         'stripeStatus': "CANCELED"
