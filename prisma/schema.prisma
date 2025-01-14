@@ -116,7 +116,7 @@ model Call {
   cost             Float
   stripeBilledCall Boolean  @default(false)
   durationSeconds  Int
-  timestamp        Int
+  timestamp        String
   createdAt        DateTime @default(now())
 
   agent Agent @relation(fields: [agentId], references: [id])
