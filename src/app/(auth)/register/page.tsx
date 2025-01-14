@@ -6,7 +6,8 @@ import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/app/_components/icons"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-
+import Image from "next/image";
+import icon from '../../../../public/assets/icon.svg'
 import { registerUser } from '@/app/(auth)/register/actions'
 import { useFormStatus } from "react-dom"
 import { useActionState } from "react"
@@ -42,7 +43,7 @@ export default function RegisterPage() {
       <div className="lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">
-            <Icons.logo className="mx-auto h-6 w-6" />
+            <Image src={icon} width={150} alt="AutoClient Icon" className="mx-auto h-12 w-12"/>
             <h1 className="text-2xl font-semibold tracking-tight">
               Create an account
             </h1>

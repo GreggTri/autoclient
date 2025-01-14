@@ -56,30 +56,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         </div>
         {state?.message &&  <p className="text-red-500">{state.message}</p>}
       </form>
-      <div className="relative ">
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-transparent px-2 text-muted-foreground-">
-            Or continue with
-          </span>
-        </div>
-      </div>
-      <button
-        type="button"
-        className={`${cn(buttonVariants({ variant: "outline" }))} border-primary text-primary`}
-        // onClick={() => {
-        //     setIsGoogleLoading(true)
-        //     setIsLoading(true)
-        //     signIn("google")
-        // }}
-        //disabled={isLoading || isGoogleLoading}
-      >
-        {/* {isGoogleLoading ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <Icons.gitHub className="mr-2 h-4 w-4" />
-        )}{" "} */}
-        Google
-      </button>
     </div>
   )
 }

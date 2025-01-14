@@ -4,14 +4,15 @@ import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/app/_components/icons"
 import NavBar from "@/app/_components/navbar"
 import { cn } from "@/lib/utils"
+import { ArrowRight } from "lucide-react"
 
 export const metadata = {
-  title: "Pricing | Happy Client",
+  title: "Pricing | AutoClient",
 }
 
 export default function PricingPage() {
   return (
-    <div className="flex">
+    <div className="flex flex-col">
         <NavBar/>
         <div className="flex flex-col my-20 py-2 px-[12%]">
             <div className="">
@@ -56,9 +57,8 @@ export default function PricingPage() {
                         </p>
                         <span className="text-sm">+ $0.35 / minute <b>(after the first 1,000 minutes)</b></span>
                     </div>
-                    <Link href="/register" className={cn(buttonVariants({ size: "lg" }), "text-BLACK")}>
-                        <span>Get Started</span>
-                        <Icons.chevronRight className="opacity-90" />
+                    <Link href="/bookDemo" className={cn(buttonVariants({ size: "lg" }), "text-BLACK text-lg font-semibold")}>
+                        Get a Demo <ArrowRight className="ml-1 font-lg" />
                     </Link>
                 </div>
             </div>

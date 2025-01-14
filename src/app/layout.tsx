@@ -2,12 +2,19 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster"
+//import Head from 'next/head';
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Auto Client",
+  title: "Automate Intake | AutoClient",
   description: "",
+  icons: {
+    icon: [
+      { url: '/icon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/icon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -17,7 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scrollbar-none overflow-y-scroll">
-      
+      {/* <Head>
+        <link rel="icon" href="/public/assets/icon-32x32.png" sizes="32x32" />
+        <link rel="icon" href="/public/assets/icon-16x16.png" sizes="16x16" />
+      </Head> */}
       <body
         className={` ${inter.className} min-h-screen bg-background text-text antialiased`}
       >

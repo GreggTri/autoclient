@@ -34,7 +34,7 @@ const TeamSettingsPage = async ({ searchParams }: {searchParams: Promise<SearchP
                 <div className="flex items-center justify-between">
                     <Search placeholder="Search..."/>
                     <Popover>
-                        <PopoverTrigger className='flex flex-row items-center gap-1 p-2 bg-primary rounded-md justify-center text-sm text-BLACK'><Icons.add width={20} height={20}/>Invite</PopoverTrigger>
+                        <PopoverTrigger className='flex flex-row items-center gap-1 p-2 bg-primary rounded-md justify-center text-sm text-white'><Icons.add width={20} height={20}/>Invite</PopoverTrigger>
                         <PopoverContent className='flex bg-black w-full border-none'>
                             <SendInviteForm/>
                         </PopoverContent>

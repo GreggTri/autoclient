@@ -32,8 +32,8 @@ export default async function AgentsPage() {
       <div className="flex justify-between my-2">
 
         <Link href={`/dashboard/agents/add`}>
-          <Button className="text-black">
-            <Icons.add height={20} width={20}/> Create Agent
+          <Button className="text-white">
+            <Icons.add height={25} width={25}/> Create Agent
           </Button>
         </Link>
         

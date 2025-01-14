@@ -96,7 +96,7 @@ function AgentEditFormComponent({
   return (
     <div className="min-h-screen bg-background text-white flex items-center justify-center mt-10">
       <div className="w-full max-w-3xl p-8 space-y-8">
-        <h1 className="text-3xl font-semibold tracking-tight">
+        <h1 className="text-3xl font-semibold tracking-tight text-PURPLE">
           Edit Your Agent
         </h1>
         <div className='text-sm'>
@@ -130,7 +130,7 @@ function AgentEditFormComponent({
                   <FormControl>
                     <Textarea
                       {...field}
-                      className="border border-gray-500"
+                      className="border border-gray-500 min-h-[300px] resize-y"
                       placeholder="Enter your system prompt here..."
                     />
                   </FormControl>
@@ -261,7 +261,7 @@ function AgentEditFormComponent({
               {/* Button to add new dynamic fields */}
               <Button
                 type="button"
-                className='text-BLACK w-[25%]'
+                className='text-white w-[25%]'
                 onClick={() =>
                   append({
                     fieldName: '',
@@ -274,7 +274,7 @@ function AgentEditFormComponent({
               </Button>
             </div>
 
-            <Button type="submit" className="w-full bg-primary text-black hover:bg-primary/90">
+            <Button type="submit" className="w-full bg-primary text-white hover:bg-primary/90">
               Update Agent!
             </Button>
           </form>

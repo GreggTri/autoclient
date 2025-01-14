@@ -64,7 +64,7 @@ export function UpdateProfileButton() {
     return (
         <div className="flex justify-end align-bottom">
             <button 
-                className="flex flex-row mt-5 px-4 py-1 bg-primary rounded-md text-sm text-BLACK" 
+                className="flex flex-row mt-5 px-4 py-1 bg-PURPLE rounded-md text-sm text-BLACK" 
                 disabled={pending}
                 type="submit"
                 >

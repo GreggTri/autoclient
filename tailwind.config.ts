@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
   	extend: {
   		backgroundImage: {
-  			paper: 'url("/assets/paper.svg")'
+			'primary': 'linear-gradient(to right, #5110de, #0e5ae0)',
   		},
   		animation: {
   			bobbing: 'bobbing 0.5s ease-in-out infinite',
@@ -48,10 +48,10 @@ const config: Config = {
   			}
   		},
   		colors: {
-  			BLACK: '#111111',
+  			BLACK: '#0a0a09',
   			WHITE: '#f5f5f5',
-  			primary: '#f4e300',
-  			background: '#111111',
+			PURPLE: '#5110de',
+  			background: '#0a0a09',
   			text: '#f5f5f5'
   		}
   	}

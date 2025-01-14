@@ -60,7 +60,7 @@ function CompanyNameForm({ companyName }: { companyName: string }) {
       <Button
         type="submit"
         disabled={isPending}
-        className="mt-4 bg-primary text-BLACK w-full"
+        className="mt-4 bg-primary text-white w-full"
       >
         {isPending ? <Icons.spinner className='animate-spin' height={15} width={15}/> : "Update"}
       </Button>

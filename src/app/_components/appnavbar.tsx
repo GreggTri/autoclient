@@ -26,7 +26,7 @@ const AppNavBar = () => {
 
             {/* Logo and Title */}
             <div className="flex items-center gap-2">
-                <Image src={logo} width={100} alt="HappyClient Logo"/>
+                <Image src={logo} width={130} alt="HappyClient Logo"/>
             </div>
 
             {/* Horizontal Navigation (for large screens only) */}
