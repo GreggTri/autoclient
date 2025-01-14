@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   const payload = await request.json();
   try {
     console.log(payload);
-    
+
     if(payload.message.type == "end-of-call-report"){
 
       const getOrgFromAgent = await prisma.agent.findUnique({
@@ -33,18 +33,18 @@ export async function POST(request: Request) {
       const createdCall = await prisma.call.create({
         data: {
           id: payload.message.call.id,
-          agentId: payload.message.call.assistant_id,
+          agentId: payload.message.call.assistantId,
           tenantId: getOrgFromAgent.tenantId,
-          durationSeconds: Math.round(payload.message.duration_seconds), //rounds to the nearest second
-          'cost': payload.message.cost,
-          'summary': payload.message.summary,
-          'transcript': payload.message.transcript,
-          'recording': payload.message.recording_url,
-          'timestamp': payload.message.timestamp,
+          durationSeconds: payload.message.durationSeconds,
+          cost: payload.message.cost,
+          summary: payload.message.summary,
+          transcript: payload.message.transcript,
+          recording: payload.message.recordingUrl,
+          timestamp: payload.message.timestamp,
           'lead': {
             'create': {
               'tenantId': getOrgFromAgent.tenantId,
-              'data': payload.message.analysis.structured_data
+              'data': payload.message.analysis.structuredData
             }
           }
         }
