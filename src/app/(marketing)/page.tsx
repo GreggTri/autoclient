@@ -50,8 +50,8 @@ export default async function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
                 { icon: BarChart, title: "Increase Efficiency", description: "Streamline your intake process and reduce administrative overhead." },
-                { icon: Users, title: "Improve Client Experience", description: "Provide instant, 24/7 responses to potential clients." },
-                { icon: Shield, title: "Ensure Compliance", description: "Maintain consistent and compliant intake procedures." },
+                { icon: Users, title: "Improve Client Experience", description: "First impressions matter. Give clients a kind and caring experience that reflects your law firm's values" },
+                { icon: Shield, title: "Recordings & Transcripts", description: "Every call is recorded and transcribed, giving you a clear record of client interactions for accountability and better lead management." },
               ].map((feature, index) => (
                 <div key={index} className="bg-[#111110] p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
                   <feature.icon className="w-12 h-12 mb-4 text-[#5110de]" />
@@ -70,8 +70,8 @@ export default async function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 { step: "1", title: "AI Answers Calls", description: "Our AI system answers calls 24/7, ensuring no potential client is missed." },
-                { step: "2", title: "Qualify Leads", description: "The AI qualifies leads based on your specific criteria and gathers essential information." },
-                { step: "3", title: "Seamless Handoff", description: "Qualified leads are immediately sent to your team for follow-up." },
+                { step: "2", title: "Qualify Leads", description: "Gathers requested information from your pontential new client so you can make the most accurate decision." },
+                { step: "3", title: "Seamless Handoff", description: "leads are immediately posted for your firm to view. look at your potential new clients information that you requested and review call data." },
               ].map((item, index) => (
                 <div key={index} className="flex flex-col items-center text-center">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#5110de] to-[#0e5ae0] text-[#f5f5f5] flex items-center justify-center text-xl font-bold mb-4">
