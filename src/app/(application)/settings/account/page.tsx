@@ -13,7 +13,6 @@ async function OrgAccountSettingsPage(){
   if (!session) return redirect('/login');
 
   const org = await getOrg(); //just have a getOrg function
-  console.log(org);
   if(!org) return redirect('/settings/profile');
   
   return (
@@ -28,7 +27,9 @@ async function OrgAccountSettingsPage(){
 
         {org.stripeSubscriptionId ? 
           <div className="my-6">
-            
+            <Link href={`https://billing.stripe.com/p/login/test_9AQ6oJ7VN97cgs85kk`} className='underline'>
+              Manage Subscription
+            </Link>
           </div>
         :
         <div className="my-6">
@@ -40,9 +41,6 @@ async function OrgAccountSettingsPage(){
           </Button>
         </div>
         }
-        
-
-        {/* add a contact button to cancel subcription etc later */}
       </div>
     </div>
   );
