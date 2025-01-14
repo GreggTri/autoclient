@@ -29,20 +29,20 @@ async function CallPage({ params }: { params: Promise<{ callId: string }> }) {
     }
 
     return (
-    <div className="min-h-screen bg-[#111111] text-[#f5f5f5] p-8">
+    <div className="min-h-screen bg-background text-white p-8">
         <div className="max-w-4xl mx-auto space-y-8">
-        <h1 className="text-3xl font-bold tracking-tight text-[#f5f5f5]">Call Details</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-white">Call Details</h1>
         
         <div className="grid gap-6 md:grid-cols-2">
             <Card className="bg-[#1a1a1a] border border-[#333333]">
                 <CardHeader>
-                    <CardTitle className="text-[#f5f5f5] text-xl font-semibold">Call Information</CardTitle>
+                    <CardTitle className="text-white text-xl font-semibold">Call Information</CardTitle>
                 </CardHeader>
                 <div className="h-px bg-[#333333] mx-6"></div>
                 <CardContent className="space-y-4 mt-4">
                     <div className="flex items-center space-x-4">
                         <div>
-                            <p className="text-sm font-medium text-[#f5f5f5]">Agent ID</p>
+                            <p className="text-sm font-medium text-white">Agent ID</p>
                             <Link
                             className='hover:underline'
                             href={`/dashboard/agents/${call.agentId}`}
@@ -58,7 +58,7 @@ async function CallPage({ params }: { params: Promise<{ callId: string }> }) {
                         {call.lead ?
                             <Link
                             className='hover:underline'
-                            href={`/dashboard/agents/${call.agentId}`}
+                            href={`/dashboard/leads/${call.lead.id}`}
                             >
                                  <p className="text-xs text-[#a0a0a0]">{call.lead.id}</p>
                             </Link>

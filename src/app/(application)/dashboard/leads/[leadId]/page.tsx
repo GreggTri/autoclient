@@ -69,7 +69,7 @@ export default async function LeadPage({ params }: { params: Promise<{ leadId: s
     assert(lead.data)
 
     return (
-        <div className="min-h-screen bg-[#111111] text-[#f5f5f5] p-8">
+        <div className="min-h-screen bg-background text-[#f5f5f5] p-8">
           <div className="max-w-4xl mx-auto space-y-8">
             <h1 className="text-3xl font-bold tracking-tight text-[#f5f5f5]">Lead Details</h1>
             
