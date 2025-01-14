@@ -24,7 +24,7 @@ export default async function Home() {
                   Empathy Engineered For Every Client
                 </h1>
                 <p className="text-lg md:text-xl mb-6 md:mb-8 text-gray-400">
-                  Transform every call into a qualified lead. Ditch your answering service and embrace the future of client acquisition.
+                  Transform every intake call into a potential new client! Ditch your answering service and embrace the future of client acquisition.
                 </p>
                 <Button className="w-full md:w-auto bg-gradient-to-r from-[#5110de] to-[#0e5ae0] text-[#f5f5f5] hover:opacity-90 font-semibold px-6 py-3 text-lg">
                   Get a Demo<ArrowRight className="ml-2" />
