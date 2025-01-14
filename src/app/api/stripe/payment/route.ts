@@ -14,10 +14,8 @@ export async function POST(request: Request) {
   try {
     const data = await request.json()
 
-    console.log(data.data.object);
-
     const getSub = await stripe.subscriptions.update(
-      data.object.subscription,
+      data.data.object.subscription,
       {
         'items': [
           {
