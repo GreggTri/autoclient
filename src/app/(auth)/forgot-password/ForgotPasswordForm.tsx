@@ -81,7 +81,7 @@ function ForgotPasswordForm() {
                                     Email
                                 </FormLabel>
                                 <FormControl>
-                                    <Input {...field} className='bg-gray-800 border-gray-700 text-white placeholder-gray-400'/>
+                                    <Input {...field} className=' border-gray-700 text-white'/>
                                 </FormControl>
                             </FormItem>
                             )}  
@@ -91,7 +91,7 @@ function ForgotPasswordForm() {
                     <Button type="submit"
                     className={cn(
                         buttonVariants(),
-                        "w-full bg-[#f4e300] text-black hover:bg-[#d4c600]"
+                        "w-full bg-primary text-white hover:bg-primary/90"
                     )}>
                       {pending ?
                         <Icons.spinner className="animate-spin"/>

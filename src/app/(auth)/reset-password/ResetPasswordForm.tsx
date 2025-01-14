@@ -43,7 +43,7 @@ export default function ResetPasswordForm({token}: {token: string}) {
               name="password"
               type="password"
               required
-              className="bg-gray-800 border-gray-700 text-white"
+              className=" border-gray-700 text-white"
             />
           </div>
           {state?.errors?.password && (
@@ -63,7 +63,7 @@ export default function ResetPasswordForm({token}: {token: string}) {
               name="confirmPassword"
               type="password"
               required
-              className="bg-gray-800 border-gray-700 text-white"
+              className=" border-gray-700 text-white"
             />
           </div>
           {state?.errors?.confirmPassword && (
@@ -89,7 +89,7 @@ function ResetPasswordButton() {
     type="submit"
     className={cn(
         buttonVariants(),
-        "w-full bg-[#f4e300] text-black hover:bg-[#d4c600]"
+        "w-full bg-primary text-black hover:bg-primary/90"
     )}
     >
     {pending && (
