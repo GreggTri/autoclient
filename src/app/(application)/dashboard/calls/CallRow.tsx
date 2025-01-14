@@ -26,7 +26,7 @@ export default async function CallRow({call}:
     id: string;
     leadId: string;
     durationSeconds: number;
-    timestamp: number;
+    timestamp: string;
 }}) {
     const {isAuth} = await verifySession(true)
     
@@ -35,7 +35,7 @@ export default async function CallRow({call}:
         redirect('/')
     }
 
-    const datetime = new Date(call.timestamp)
+    const datetime = new Date(Number(call.timestamp))
     const formattedDate = datetime.toISOString();
 
     return (

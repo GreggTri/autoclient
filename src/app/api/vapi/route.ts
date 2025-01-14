@@ -40,7 +40,7 @@ export async function POST(request: Request) {
           summary: payload.message.summary,
           transcript: payload.message.transcript,
           recording: payload.message.recordingUrl,
-          timestamp: payload.message.timestamp,
+          timestamp: String(payload.message.timestamp),
           'lead': {
             'create': {
               'tenantId': getOrgFromAgent.tenantId,
