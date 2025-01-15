@@ -15,7 +15,7 @@ const formSchema = z.object({
     dataCollection: z.array(
       z.object({
         fieldName: z.string().min(1, 'Field Name is required'),
-        valueType: z.enum(['text', 'number', 'datetime', 'email', 'trueFalse', 'list']),
+        valueType: z.enum(['text', 'number', 'trueFalse', 'list']),
         fieldDescription: z.string().min(1, 'Field Description is required'),
       })
     ).optional()
