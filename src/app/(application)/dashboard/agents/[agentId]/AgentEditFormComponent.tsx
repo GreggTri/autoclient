@@ -113,8 +113,8 @@ function AgentEditFormComponent({
           <div className="relative mt-4 w-fit">
             {/* Actual text */}
             <p
-              className={`text-white ${
-                isTextCovered ? 'text-background select-none' : ''
+              className={` ${
+                isTextCovered ? 'text-background select-none' : 'text-white'
               } transition duration-300`}
             >
               <b>{sipURI}</b>
