@@ -29,7 +29,7 @@ interface VoiceOption {
 
 interface DataField {
   fieldName: string;
-  valueType: "number" | "text" | "datetime" | "email" | "trueFalse" | "list";         // e.g. "string", "boolean", "number"
+  valueType: "number" | "text" | "trueFalse" | "list";         // e.g. "string", "boolean", "number"
   fieldDescription: string;
 }
 
@@ -37,8 +37,6 @@ interface DataField {
 const valueTypeMapping: Record<string, string> = {
   text: "string",
   number: "number",
-  datetime: "string", // Consider using ISO 8601 date strings
-  email: "string",
   trueFalse: "boolean",
   list: "array"
 };

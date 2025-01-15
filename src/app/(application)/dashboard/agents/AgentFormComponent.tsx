@@ -21,7 +21,7 @@ const formSchema = z.object({
   dataCollection: z.array(
     z.object({
       fieldName: z.string().min(1, 'Field Name is required'),
-      valueType: z.enum(['text', 'number', 'datetime', 'email', 'trueFalse','list']),
+      valueType: z.enum(['text', 'number', 'trueFalse','list']),
       fieldDescription: z.string().min(1, 'Field Description is required'),
     })
   ).optional()
@@ -199,8 +199,6 @@ function AgentFormComponent() {
                                 {/* Provide user-friendly options */}
                                 <SelectItem value="text">Text</SelectItem>
                                 <SelectItem value="number">Number</SelectItem>
-                                <SelectItem value="datetime">Date/Time</SelectItem>
-                                <SelectItem value="email">Email</SelectItem>
                                 <SelectItem value="trueFalse">True/False</SelectItem>
                                 <SelectItem value="list">List</SelectItem>
                               </SelectContent>
