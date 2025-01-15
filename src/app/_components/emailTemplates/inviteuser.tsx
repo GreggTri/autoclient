@@ -66,7 +66,7 @@ export const InviteUserEmail = ({
             <Section></Section>
             <Section className="text-center mt-[32px] mb-[32px]">
               <Button
-                className="bg-[#f4e300] rounded text-black text-[16px] font-semibold no-underline text-center px-5 py-3 shadow"
+                className="bg-PURPLE rounded text-black text-[16px] font-semibold no-underline text-center px-5 py-3 shadow"
                 href={inviteLink}
               >
                 Join the team!
