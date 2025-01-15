@@ -34,7 +34,7 @@ async function CallPage({ params }: { params: Promise<{ callId: string }> }) {
         <h1 className="text-3xl font-bold tracking-tight text-white">Call Details</h1>
         
         <div className="grid gap-6 md:grid-cols-2">
-            <Card className="bg-[#1a1a1a] border border-[#333333]">
+            <Card className="bg-[#111110] border border-[#333333]">
                 <CardHeader>
                     <CardTitle className="text-white text-xl font-semibold">Call Information</CardTitle>
                 </CardHeader>
@@ -74,13 +74,13 @@ async function CallPage({ params }: { params: Promise<{ callId: string }> }) {
                     <div>
                     <p className="text-sm font-medium text-[#f5f5f5]">Start Time</p>
                     <p className="text-xs text-[#a0a0a0]">
-                        {new Date(call.timestamp).toLocaleString()}
+                        {new Date(Number(call.timestamp)).toLocaleString()}
                     </p>
                     </div>
                 </CardContent>
             </Card>
 
-            <Card className="bg-[#1a1a1a] border border-[#333333]">
+            <Card className="bg-[#111110] border border-[#333333]">
             <CardHeader>
                 <CardTitle className="text-[#f5f5f5] text-xl font-semibold">Call Summary</CardTitle>
             </CardHeader>
@@ -91,7 +91,7 @@ async function CallPage({ params }: { params: Promise<{ callId: string }> }) {
             </Card>
         </div>
         
-        <Card className="bg-[#1a1a1a] border border-[#333333]">
+        <Card className="bg-[#111110] border border-[#333333]">
           <CardHeader>
             <CardTitle className="text-[#f5f5f5] text-xl font-semibold">Recording</CardTitle>
           </CardHeader>
@@ -113,7 +113,7 @@ async function CallPage({ params }: { params: Promise<{ callId: string }> }) {
           </CardContent>
         </Card>
 
-        <Card className="bg-[#1a1a1a] border border-[#333333]">
+        <Card className="bg-[#111110] border border-[#333333]">
             <CardHeader>
             <CardTitle className="text-[#f5f5f5] text-xl font-semibold">Transcript</CardTitle>
             </CardHeader>

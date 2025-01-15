@@ -73,7 +73,7 @@ export default async function LeadPage({ params }: { params: Promise<{ leadId: s
           <div className="max-w-4xl mx-auto space-y-8">
             <h1 className="text-3xl font-bold tracking-tight text-[#f5f5f5]">Lead Details</h1>
             
-            <Card className="bg-[#1a1a1a] border border-[#333333]">
+            <Card className="bg-[#111110] border border-[#333333]">
               <CardHeader>
                 <CardTitle className="text-[#f5f5f5] text-xl font-semibold">Lead Information</CardTitle>
               </CardHeader>
@@ -96,7 +96,7 @@ export default async function LeadPage({ params }: { params: Promise<{ leadId: s
               </CardContent>
             </Card>
     
-            <Card className="bg-[#1a1a1a] border border-[#333333]">
+            <Card className="bg-[#111110] border border-[#333333]">
                 <CardHeader>
                     <CardTitle className="text-[#f5f5f5] text-xl font-semibold">Lead Details</CardTitle>
                 </CardHeader>

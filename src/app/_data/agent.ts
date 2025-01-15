@@ -29,7 +29,7 @@ interface VoiceOption {
 
 interface DataField {
   fieldName: string;
-  valueType: "number" | "text" | "datetime" | "email" | "trueFalse";         // e.g. "string", "boolean", "number"
+  valueType: "number" | "text" | "datetime" | "email" | "trueFalse" | "list";         // e.g. "string", "boolean", "number"
   fieldDescription: string;
 }
 
@@ -39,7 +39,8 @@ const valueTypeMapping: Record<string, string> = {
   number: "number",
   datetime: "string", // Consider using ISO 8601 date strings
   email: "string",
-  trueFalse: "boolean"
+  trueFalse: "boolean",
+  list: "array"
 };
 
 function generateStructuredDataSchema(dataCollection: DataField[]) {
@@ -193,8 +194,6 @@ export const createAgent = async (
     })
   })
   
-  console.log(response);
-  
   if (!response.ok) {
     console.log(await response.json());
     throw new Error(`Request failed with status: ${response.status}`);
@@ -247,7 +246,6 @@ export const updateAgent = async (
     }
   }
 
-  console.log(dataCollection);
 
   const response = await fetch(`${process.env.VAPI_API_URL}/assistant/${agentId}`, {
     method: 'PATCH',
@@ -311,7 +309,6 @@ export const updateAgent = async (
     })
   })
   
-  console.log(response);
   
   if (!response.ok) {
     console.log(await response.json());

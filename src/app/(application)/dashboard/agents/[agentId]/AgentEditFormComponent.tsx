@@ -21,7 +21,7 @@ const formSchema = z.object({
   dataCollection: z.array(
     z.object({
       fieldName: z.string().min(1, 'Field Name is required'),
-      valueType: z.enum(['text', 'number', 'datetime', 'email', 'trueFalse']),
+      valueType: z.enum(['text', 'number', 'datetime', 'email', 'trueFalse', 'list']),
       fieldDescription: z.string().min(1, 'Field Description is required'),
     })
   ).optional()
@@ -69,8 +69,8 @@ function AgentEditFormComponent({
 
       if( newGroup && 'id' in newGroup){
         toast({
-          title: "Agent has been created!",
-          description: "Scheduled ${newGroup.emailcount} clients to be emailed!",
+          title: "Agent has been updated!",
+          description: "Your AI Agent is Ready, feel free to test it out",
           variant: "destructive",
           className: "bg-green-500 border-none"
         })
@@ -211,11 +211,12 @@ function AgentEditFormComponent({
                               </SelectTrigger>
                               <SelectContent className="bg-black rounded-md border-gray-500">
                                 {/* Provide user-friendly options */}
-                                <SelectItem value="text">text</SelectItem>
+                                <SelectItem value="text">Text</SelectItem>
                                 <SelectItem value="number">Number</SelectItem>
                                 <SelectItem value="datetime">Date/Time</SelectItem>
                                 <SelectItem value="email">Email</SelectItem>
                                 <SelectItem value="trueFalse">True/False</SelectItem>
+                                <SelectItem value="list">List</SelectItem>
                               </SelectContent>
                             </Select>
                           </FormControl>

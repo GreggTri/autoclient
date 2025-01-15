@@ -9,7 +9,7 @@ import assert from "assert";
 
 //const vapi = new VapiClient({ token: process.env.VAPI_API_KEY });
 
-export const listLeads = cache(async () => {
+export const listLeads = cache(async ({ sortBy = 'createdAt', sortOrder = 'desc', page = 1, limit = 10 }) => {
     const session = await verifySession(false) //false means user does not need to be admin to hit endpoint
     if (!session) return null;
 
@@ -20,12 +20,17 @@ export const listLeads = cache(async () => {
         'select': {
             'id': true,
             'createdAt': true
-        }
+        },
+        orderBy: {
+            [sortBy]: sortOrder, // Sort by the specified field and order
+        },
+        skip: (page - 1) * limit, // Skip leads for pagination
+        take: limit, // Limit the number of leads fetched
     })
 
     if(!getLeads){
 
-        throw new Error("No leads exist")
+        return []; // Return an empty array if no leads exist
     }
 
     return getLeads

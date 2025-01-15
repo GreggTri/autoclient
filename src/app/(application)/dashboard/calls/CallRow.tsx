@@ -36,7 +36,7 @@ export default async function CallRow({call}:
     }
 
     const datetime = new Date(Number(call.timestamp))
-    const formattedDate = datetime.toISOString();
+    const formattedDate = datetime.toUTCString();
 
     return (
         <TableRow 

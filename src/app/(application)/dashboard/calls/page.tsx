@@ -12,8 +12,17 @@ import CallRow from "./CallRow";
 import { listCalls } from "@/app/_data/call";
 
 
-export default async function callsPage() {
-  const calls = await listCalls();
+export default async function callsPage({ params }: { params: Promise<{ sortByParam: string, sortOrderParam: string, pageParam: string, limitParam: number }> }) {
+
+  const { sortByParam, sortOrderParam, pageParam, limitParam } = await params;
+
+  const sortBy = sortByParam || 'createdAt'; // Default sorting by createdAt
+  const sortOrder = sortOrderParam || 'desc'; // Default to descending order
+  const page = parseInt(pageParam, 10) || 1; // Default to page 1
+  const limit = limitParam; // Items per page
+
+  const calls = await listCalls({ sortBy, sortOrder, page, limit });
+
   if (!calls) {
     return <div>Calls not found or not available.</div>;
   }
@@ -24,7 +33,7 @@ export default async function callsPage() {
   }
   
   return (
-    <div className="mx-[6.5%] my-20 bg-[#1e1e1e] rounded-md p-2">
+    <div className="mx-[6.5%] my-20 bg-[#111110] rounded-md p-2">
       <div className="flex justify-between my-2">
         
       </div>
@@ -54,6 +63,28 @@ export default async function callsPage() {
           ))}
         </TableBody>
       </Table>
+
+      <div className="flex justify-center mt-4">
+        {/* Previous Page Button */}
+        {page > 1 && (
+          <a
+            href={`?sortBy=${sortBy}&sortOrder=${sortOrder}&page=${page - 1}`}
+            className="px-4 py-2 bg-gray-700 rounded-md text-white"
+          >
+            Previous
+          </a>
+        )}
+
+        {/* Next Page Button */}
+        {calls.length === limit && (
+          <a
+            href={`?sortBy=${sortBy}&sortOrder=${sortOrder}&page=${page + 1}`}
+            className="ml-2 px-4 py-2 bg-gray-700 rounded-md text-white"
+          >
+            Next
+          </a>
+        )}
+      </div>
     </div>
   )
 }
