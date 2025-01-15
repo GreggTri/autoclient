@@ -158,7 +158,7 @@ export const createAgent = async (
         "summaryPlan": {
           "enabled": true
         },
-        "structuredDataPrompt": "[Transcript Handling]\nsome data will be spelt out for you to more accurately input the data into the Structured Data Schema. Use context awareness to understand when this is occurring and use the spelt out data to satisfy the schema requirements where applicable.",
+        "structuredDataPrompt": "[Transcript Handling]some data will be spelt out for you to more accurately input the data into the Structured Data Schema. Use context awareness to understand when this is occurring and use the spelt out data to satisfy the schema requirements where applicable. Fields that require a DateTime value should be given in this example format: 2025-01-14 14:17:43",
         "structuredDataSchema": structuredDataSchema
       },
       "artifactPlan": {
@@ -246,6 +246,22 @@ export const updateAgent = async (
     }
   }
 
+  const AUTOCLIENT_MASTER_DIRECTIVES = `
+  [Master Directives - Everything below this line is a Master Directive]
+  Do not invent information not drawn from the context. Answer only questions related to the context.
+  You should space out when asking for clients information. 
+  you're having a conversation with a human being, focus on being genuine.
+
+  [Error Handling]
+  If the customer's response is unclear, ask clarifying questions. 
+  If you encounter any issues, inform the client politely and ask to repeat.
+
+  [Response Handling]
+  evaluate the customer's response to determine if it qualifies as a valid answer. 
+  Use context awareness to assess relevance and appropriateness. 
+  If the response is valid, proceed to the next relevant question or instructions. 
+  Avoid infinite loops by moving forward when a clear answer cannot be obtained.
+  `
 
   const response = await fetch(`${process.env.VAPI_API_URL}/assistant/${agentId}`, {
     method: 'PATCH',
@@ -259,7 +275,7 @@ export const updateAgent = async (
           "messages": [
               {
                   "role": "system",
-                  "content": systemPrompt
+                  "content": systemPrompt + AUTOCLIENT_MASTER_DIRECTIVES
               }
           ],
           "provider": "openai",
@@ -295,7 +311,7 @@ export const updateAgent = async (
         "summaryPlan": {
           "enabled": true
         },
-        "structuredDataPrompt": "[Transcript Handling]\nsome data will be spelt out for you to more accurately input the data into the Structured Data Schema. Use context awareness to understand when this is occurring and use the spelt out data to satisfy the schema requirements where applicable.",
+        "structuredDataPrompt": "[Transcript Handling]some data will be spelt out for you to more accurately input the data into the Structured Data Schema. Use context awareness to understand when this is occurring and use the spelt out data to satisfy the schema requirements where applicable. Fields that require a DateTime value should be given in this example format: 2025-01-14 14:17:43",
         "structuredDataSchema": structuredDataSchema
       },
       "artifactPlan": {

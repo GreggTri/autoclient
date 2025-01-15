@@ -28,7 +28,7 @@ export default async function AgentsPage() {
   }
   
   return (
-    <div className="mx-[6.5%] my-20 bg-[#1e1e1e] rounded-md p-2">
+    <div className="mx-[6.5%] my-20 bg-[#111110] rounded-md p-2">
       <div className="flex justify-between my-2">
 
         <Link href={`/dashboard/agents/add`}>
