@@ -246,8 +246,6 @@ function AgentEditFormComponent({
                                 {/* Provide user-friendly options */}
                                 <SelectItem value="text">Text</SelectItem>
                                 <SelectItem value="number">Number</SelectItem>
-                                <SelectItem value="datetime">Date/Time</SelectItem>
-                                <SelectItem value="email">Email</SelectItem>
                                 <SelectItem value="trueFalse">True/False</SelectItem>
                                 <SelectItem value="list">List</SelectItem>
                               </SelectContent>
