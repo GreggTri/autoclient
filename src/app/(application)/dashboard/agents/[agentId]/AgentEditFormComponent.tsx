@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { z } from 'zod'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation'
 import { updateAgentAction } from './../actions'
 import { Input } from '@/components/ui/input'
 import { Icons } from '@/app/_components/icons'
+import { EyeOff, Eye } from 'lucide-react'
 
 const formSchema = z.object({
   firstMessage: z.string(),
@@ -40,6 +41,12 @@ function AgentEditFormComponent({
   sipURI,
   defaultValues,
 }: AgentEditFormProps) {
+
+  const [isTextCovered, setIsTextCovered] = useState(true);
+
+  const toggleCover = () => {
+    setIsTextCovered((prevState) => !prevState);
+  };
 
   const router = useRouter()
   
@@ -99,8 +106,34 @@ function AgentEditFormComponent({
         <h1 className="text-3xl font-semibold tracking-tight text-PURPLE">
           Edit Your Agent
         </h1>
-        <div className='text-sm'>
-          Agent SIP URI: <b>{sipURI}</b>
+        <div className='text-sm flex flex-row justify-start items-end space-x-1'>
+          <p>Agent SIP URI:</p>
+
+          {/* Text with cover */}
+          <div className="relative mt-4 w-fit">
+            {/* Actual text */}
+            <p
+              className={`text-white ${
+                isTextCovered ? 'text-background select-none' : ''
+              } transition duration-300`}
+            >
+              <b>{sipURI}</b>
+            </p>
+
+            {/* Optional cover element */}
+            {isTextCovered && (
+              <div className="absolute inset-0 bg-gray-200 opacity-30 rounded-md pointer-events-none"></div>
+            )}
+          </div>
+
+          {/* Icon Button */}
+          <button
+            onClick={toggleCover}
+            className=" text-white rounded-md flex items-center"
+            aria-label={isTextCovered ? 'Reveal Text' : 'Cover Text'}
+          >
+            {isTextCovered ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
