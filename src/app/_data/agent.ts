@@ -20,6 +20,13 @@ type VoiceProvider =
   | "rime-ai"
   | "tavus";
 
+const STRUCTURED_DATA_PROMPT = `
+[Transcript  Data Handling]
+some data, names, phone numbers, emails, will be spelt out for you to more accurately input the data into the Structured Data Schema. Use context awareness to understand when this is occurring and use the spelt out data to satisfy the schema requirements where applicable.
+Do not invent information not drawn from the context. Leave values with NULL, if need be. 
+Fields that require a Date and/or Time values should be given in this example format: 2025-01-14 14:17:43
+`
+
 interface VoiceOption {
   provider: VoiceProvider;
   voiceId: string;
@@ -45,7 +52,7 @@ function generateStructuredDataSchema(dataCollection: DataField[]) {
   // Build the "properties" object
   const properties = dataCollection.reduce((acc, curr) => {
     // Map valueType to standard programming type
-    const programmingType = valueTypeMapping[curr.valueType] || "string"; // Default to string if not matched
+    const programmingType = valueTypeMapping[curr.valueType]; // Default to string if not matched
 
     acc[curr.fieldName] = {
       description: curr.fieldDescription,
@@ -64,6 +71,23 @@ function generateStructuredDataSchema(dataCollection: DataField[]) {
     required: requiredFields,
   };
 }
+
+const AUTOCLIENT_MASTER_DIRECTIVES = `
+  [Master Directives - Everything below this line is a Master Directive]
+Do not invent information not drawn from the context. Answer only questions related to the context.
+You should space out when asking for clients information. 
+you're having a conversation with human beings, focus on being genuine.
+
+[Error Handling]
+If the customer's response is unclear, ask clarifying questions. 
+If you encounter any issues, inform the client politely and ask to repeat.
+
+[Response Handling]
+evaluate the customer's response to determine if it qualifies as a valid answer. 
+Use context awareness to assess relevance and appropriateness. 
+If the response is valid, proceed to the next relevant question or instructions. 
+Avoid infinite loops by moving forward when a clear answer cannot be obtained.
+`
 
 export const createAgent = async (
   firstMessage: string, 
@@ -120,7 +144,7 @@ export const createAgent = async (
           "messages": [
               {
                   "role": "system",
-                  "content": systemPrompt
+                  "content": systemPrompt + AUTOCLIENT_MASTER_DIRECTIVES
               }
           ],
           "provider": "openai",
@@ -156,7 +180,7 @@ export const createAgent = async (
         "summaryPlan": {
           "enabled": true
         },
-        "structuredDataPrompt": "[Transcript Handling]some data will be spelt out for you to more accurately input the data into the Structured Data Schema. Use context awareness to understand when this is occurring and use the spelt out data to satisfy the schema requirements where applicable. Fields that require a DateTime value should be given in this example format: 2025-01-14 14:17:43",
+        "structuredDataPrompt": STRUCTURED_DATA_PROMPT,
         "structuredDataSchema": structuredDataSchema
       },
       "artifactPlan": {
@@ -244,23 +268,6 @@ export const updateAgent = async (
     }
   }
 
-  const AUTOCLIENT_MASTER_DIRECTIVES = `
-  [Master Directives - Everything below this line is a Master Directive]
-  Do not invent information not drawn from the context. Answer only questions related to the context.
-  You should space out when asking for clients information. 
-  you're having a conversation with a human being, focus on being genuine.
-
-  [Error Handling]
-  If the customer's response is unclear, ask clarifying questions. 
-  If you encounter any issues, inform the client politely and ask to repeat.
-
-  [Response Handling]
-  evaluate the customer's response to determine if it qualifies as a valid answer. 
-  Use context awareness to assess relevance and appropriateness. 
-  If the response is valid, proceed to the next relevant question or instructions. 
-  Avoid infinite loops by moving forward when a clear answer cannot be obtained.
-  `
-
   const response = await fetch(`${process.env.VAPI_API_URL}/assistant/${agentId}`, {
     method: 'PATCH',
     headers: { 
@@ -273,7 +280,7 @@ export const updateAgent = async (
           "messages": [
               {
                   "role": "system",
-                  "content": systemPrompt + AUTOCLIENT_MASTER_DIRECTIVES
+                  "content": systemPrompt 
               }
           ],
           "provider": "openai",
@@ -309,7 +316,7 @@ export const updateAgent = async (
         "summaryPlan": {
           "enabled": true
         },
-        "structuredDataPrompt": "[Transcript Handling]some data will be spelt out for you to more accurately input the data into the Structured Data Schema. Use context awareness to understand when this is occurring and use the spelt out data to satisfy the schema requirements where applicable. Fields that require a DateTime value should be given in this example format: 2025-01-14 14:17:43",
+        "structuredDataPrompt": STRUCTURED_DATA_PROMPT,
         "structuredDataSchema": structuredDataSchema
       },
       "artifactPlan": {
@@ -335,16 +342,25 @@ export const updateAgent = async (
 
 }
 
-
+//ProgrammingType To UserType
+const valueTypeMappingPTToUT: Record<string, string> = {
+  string: "text",
+  number: "number",
+  boolean: "trueFalse",
+  array: "list"
+};
 
 
 function formatPropertiesToDataCollection(properties: Record<string, { description: string; type: string }>): DataField[] {
+  
   return Object.entries(properties).map(([key, value]) => {
-    const mappedType = valueTypeMapping[value.type] as DataField["valueType"] | undefined; // Narrow the type
+    
+    const mappedType = valueTypeMappingPTToUT[value.type] as DataField["valueType"]; // Narrow the type
+    assert(mappedType != undefined)
 
     return {
       fieldName: key,
-      valueType: mappedType ?? "text", // Default to "text" if the mapping is invalid
+      valueType: mappedType, // Default to "text" if the mapping is invalid
       fieldDescription: value.description,
     };
   });
