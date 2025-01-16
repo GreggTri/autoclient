@@ -1,12 +1,19 @@
 'use server'
 
-import Image from "next/image";
 import { ArrowRight, BarChart, Users, Shield } from 'lucide-react';
 import Link from "next/link";
 import ContactUsForm from "./ContactUsForm";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/app/_components/navbar";
+import { Suspense } from "react";
 
+async function IframeLoadingState(){
+  return "Loading Video..."
+}
+
+async function IframeVideoComponent(){
+  return <iframe src="https://www.youtube.com/embed/9Mlxjr7K6D4?si=jl9hZ5a2zWoVodhK" title="YouTube video player" className='w-[720px]' height={450} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
+}
 
 export default async function Home() {
 
@@ -31,13 +38,9 @@ export default async function Home() {
                 </Button>
               </div>
               <div className="md:w-1/2 mt-8 md:mt-0">
-                <Image 
-                  src="/placeholder.svg" 
-                  alt="AI-powered intake system" 
-                  width={600} 
-                  height={400} 
-                  className="rounded-lg shadow-2xl w-full"
-                />
+                <Suspense fallback={<IframeLoadingState/>}>
+                  <IframeVideoComponent/>
+                </Suspense>
               </div>
             </div>
           </div>
