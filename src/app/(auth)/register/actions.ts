@@ -27,7 +27,7 @@ export async function registerUser(state: AuthFormState, formData: FormData){
     try {
         const existingUser = await prisma.user.findUnique({
             where: {
-                email: email
+                email: email.toLowerCase()
             }
         })
 
@@ -41,12 +41,12 @@ export async function registerUser(state: AuthFormState, formData: FormData){
 
         const user = await prisma.user.create({
             data: {
-                email: email,
+                email: email.toLowerCase(),
                 password: hashedPassword,
                 isAdmin: true,
                 org: {
                     create: {
-                        companyName: email + " Created"
+                        companyName: email.toLowerCase() + " Created"
                     }
                 }
             }

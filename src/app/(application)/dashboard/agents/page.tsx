@@ -1,4 +1,4 @@
-'use server'
+import 'server-only'
 
 import AgentFormComponent from "./AgentFormComponent";
 import {
@@ -28,12 +28,12 @@ export default async function AgentsPage() {
   }
   
   return (
-    <div className="mx-[6.5%] my-20 bg-[#1e1e1e] rounded-md p-2">
+    <div className="mx-[6.5%] my-20 bg-[#111110] rounded-md p-2">
       <div className="flex justify-between my-2">
 
         <Link href={`/dashboard/agents/add`}>
-          <Button className="text-black">
-            <Icons.add height={20} width={20}/> Create Agent
+          <Button className="text-white">
+            <Icons.add height={25} width={25}/> Create Agent
           </Button>
         </Link>
         
@@ -42,12 +42,9 @@ export default async function AgentsPage() {
         <TableCaption>List of Agents</TableCaption>
         <TableHeader>
           <TableRow className="border-white/50">
-            <TableHead className="">Names</TableHead>
-            <TableHead>Next Send Out Date</TableHead>
-            <TableHead className="">Emails Per Group</TableHead>
-            <TableHead className="w-[150px]">Add Emails</TableHead>
-            <TableHead className="w-[150px]">Remove Emails</TableHead>
-            <TableHead className="w-[150px]">Deactivate Group</TableHead>
+            <TableHead className="">Agent Id</TableHead>
+
+            <TableHead className="w-[150px]">Deactivate Agent</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -58,7 +55,9 @@ export default async function AgentsPage() {
             return a.isArchived ? 1 : -1;
           })
           .map((agent) => (
-            <AgentRow key={agent.id} agent={
+            <AgentRow 
+            key={agent.id} 
+            agent={
               {
                 'id': agent.id,
                 //...

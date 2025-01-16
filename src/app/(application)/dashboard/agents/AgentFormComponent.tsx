@@ -21,7 +21,7 @@ const formSchema = z.object({
   dataCollection: z.array(
     z.object({
       fieldName: z.string().min(1, 'Field Name is required'),
-      valueType: z.enum(['text', 'number', 'datetime', 'email']),
+      valueType: z.enum(['text', 'number', 'trueFalse','list']),
       fieldDescription: z.string().min(1, 'Field Description is required'),
     })
   ).optional()
@@ -59,7 +59,7 @@ function AgentFormComponent() {
       if( newGroup && 'id' in newGroup){
         toast({
           title: "Agent has been created!",
-          description: "Scheduled ${newGroup.emailcount} clients to be emailed!",
+          description: "Your AI Agent is Ready",
           variant: "destructive",
           className: "bg-green-500 border-none"
         })
@@ -85,7 +85,7 @@ function AgentFormComponent() {
   return (
     <div className="min-h-screen bg-background text-white flex items-center justify-center">
       <div className="w-full max-w-3xl p-8 space-y-8">
-        <h1 className="text-3xl font-semibold tracking-tight">
+        <h1 className="text-3xl font-semibold tracking-tight text-PURPLE">
           Configure A New Intake AI Agent
         </h1>
         <Form {...form}>
@@ -116,7 +116,7 @@ function AgentFormComponent() {
                   <FormControl>
                     <Textarea
                       {...field}
-                      className="border border-gray-500"
+                      className="border border-gray-500 min-h-[300px] resize-y"
                       placeholder="Enter your system prompt here..."
                     />
                   </FormControl>
@@ -152,7 +152,7 @@ function AgentFormComponent() {
               2) dataCollection (Dynamic Fields) 
               Each item has: fieldName, valueType, fieldDescription
             */}
-            <div className="space-y-2">
+            <div className="flex flex-col space-y-2">
               <FormLabel>Data Collection Fields</FormLabel>
 
               {fields.map((fieldItem, index) => (
@@ -197,10 +197,10 @@ function AgentFormComponent() {
                               </SelectTrigger>
                               <SelectContent className="bg-black rounded-md border-gray-500">
                                 {/* Provide user-friendly options */}
-                                <SelectItem value="text">text</SelectItem>
+                                <SelectItem value="text">Text</SelectItem>
                                 <SelectItem value="number">Number</SelectItem>
-                                <SelectItem value="datetime">Date/Time</SelectItem>
-                                <SelectItem value="email">Email</SelectItem>
+                                <SelectItem value="trueFalse">True/False</SelectItem>
+                                <SelectItem value="list">List</SelectItem>
                               </SelectContent>
                             </Select>
                           </FormControl>
@@ -234,6 +234,7 @@ function AgentFormComponent() {
                     <Button
                       type="button"
                       variant="destructive"
+                      className='text-red-500'
                       onClick={() => remove(index)}
                     >
                       Remove
@@ -245,6 +246,7 @@ function AgentFormComponent() {
               {/* Button to add new dynamic fields */}
               <Button
                 type="button"
+                className='text-white w-[25%]'
                 onClick={() =>
                   append({
                     fieldName: '',
@@ -257,7 +259,7 @@ function AgentFormComponent() {
               </Button>
             </div>
 
-            <Button type="submit" className="w-full bg-primary text-black hover:bg-primary/90">
+            <Button type="submit" className="w-full bg-primary text-white hover:bg-primary/90">
               Create Agent!
             </Button>
           </form>

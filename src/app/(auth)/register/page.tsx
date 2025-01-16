@@ -6,13 +6,15 @@ import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/app/_components/icons"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-
+import Image from "next/image";
+import icon from '../../../../public/assets/icon.svg'
 import { registerUser } from '@/app/(auth)/register/actions'
-import { useFormState, useFormStatus } from "react-dom"
+import { useFormStatus } from "react-dom"
+import { useActionState } from "react"
 
 
 export default function RegisterPage() {
-  const [state, action] = useFormState(registerUser, undefined)
+  const [state, action] = useActionState(registerUser, undefined)
 
   return (
     <div className="container bg-background grid h-screen w-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
@@ -41,7 +43,7 @@ export default function RegisterPage() {
       <div className="lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">
-            <Icons.logo className="mx-auto h-6 w-6" />
+            <Image src={icon} width={150} alt="AutoClient Icon" className="mx-auto h-12 w-12"/>
             <h1 className="text-2xl font-semibold tracking-tight">
               Create an account
             </h1>
@@ -91,30 +93,7 @@ export default function RegisterPage() {
                 <RegisterButton/>
               </div>
             </form>
-            <div className="relative ">
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-transparent px-2 text-muted-foreground-">
-                  Or continue with
-                </span>
-              </div>
-            </div>
-            <button
-              type="button"
-              className={`${cn(buttonVariants({ variant: "outline" }))} border-primary text-primary`}
-              // onClick={() => {
-              //     setIsGoogleLoading(true)
-              //     setIsLoading(true)
-              //     signIn("google")
-              // }}
-              //disabled={isLoading || isGoogleLoading}
-            >
-              {/* {isGoogleLoading ? (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <Icons.gitHub className="mr-2 h-4 w-4" />
-              )}{" "} */}
-              Google
-            </button>
+            
           </div>
           <p className="px-8 text-center text-sm text-muted-foreground">
             By clicking continue, you agree to our{" "}
@@ -144,7 +123,7 @@ function RegisterButton() {
 
   return (
     <button 
-      className={cn(buttonVariants())} 
+      className={cn(buttonVariants(), 'text-BLACK')} 
       disabled={pending}
       >
       {pending && (

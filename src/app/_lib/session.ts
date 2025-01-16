@@ -81,7 +81,8 @@ export async function verifySession(adminOnly: boolean) {
         expiresAt: authSession.expiresAt, 
         userId: String(authSession.userId), 
         isAdmin: authSession.isAdmin, 
-        tenantId: authSession.tenantId
+        tenantId: authSession.tenantId,
+        subscriptionId: authSession.stripeSubscriptionId
     };
 }
 
@@ -94,6 +95,10 @@ export async function updateSession() {
         return null;
     }
 
+    // This condition ensures that the session or token can be refreshed only if it's within a valid time
+    // window (determined by the SESSION_UPDATE_THRESHOLD). It avoids refreshing sessions that are too
+    // old while allowing updates just before or shortly after expiration.
+    
     if(payload.exp! - SESSION_UPDATE_THRESHOLD >= Date.now() - payload.exp!){
     
         const expires = new Date(Date.now() + 4 * 60 * 60 * 1000);

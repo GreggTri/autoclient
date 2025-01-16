@@ -15,26 +15,19 @@ export const RegisterFormSchema = z.object({
 
 
 export const LoginFormSchema = z.object({
-    email: z.string().email({ message: 'Please enter a valid email.' }),
+    email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
     password: z.string().min(1, { message: 'Password field must not be empty.' }),
 });
 
-export const AddRoleSchema = z.object({
-  newRole: z.string()
-    .min(1, "Role must not be blank")
-    .max(64, "Role must be no more than 64 characters long")
-    .regex(/^[A-Za-z\s]+$/, "Role must only contain letters")
-})
-
 export type AuthFormState =
-    {
-      errors?: {
-        email?: string[];
-        password?: string[];
-      };
-      message?: string;
-    }
-  | undefined | null;
+  {
+    errors?: {
+      email?: string[];
+      password?: string[];
+    };
+    message?: string;
+  }
+| undefined | null;
 
 export const updateProfileNameForm = z.object({
   firstName: z.string()
@@ -64,3 +57,24 @@ export type SessionPayload = {
   tenantId: string;
   stripeSubscriptionId: string | null;
 };
+
+export type ResetPasswordState =
+  {
+    success?: boolean, 
+    errors?: {
+      password?: string[];
+      confirmPassword?: string[];
+    };
+    message?: string;
+  }
+| undefined | null;
+
+
+export type ForgotPasswordState =
+  {
+    errors?: {
+      email?: string[];
+    };
+    message?: string;
+  }
+| undefined | null;

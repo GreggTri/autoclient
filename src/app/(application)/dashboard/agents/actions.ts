@@ -1,6 +1,7 @@
 'use server'
 
-import { createAgent } from "@/app/_data/agent";
+import 'server-only'
+import { createAgent, updateAgent } from "@/app/_data/agent";
 import { verifySession } from "@/app/_lib/session";
 import { prisma } from "@/utils/prisma";
 import assert from "assert";
@@ -14,7 +15,7 @@ const formSchema = z.object({
     dataCollection: z.array(
       z.object({
         fieldName: z.string().min(1, 'Field Name is required'),
-        valueType: z.enum(['text', 'number', 'datetime', 'email']),
+        valueType: z.enum(['text', 'number', 'trueFalse', 'list']),
         fieldDescription: z.string().min(1, 'Field Description is required'),
       })
     ).optional()
@@ -25,24 +26,63 @@ const formSchema = z.object({
 export async function createAgentAction(formData: FormValues){
     const session = await verifySession(true) //false means user does not need to be admin to hit endpoint
     if (!session) return null;
-
-    console.log(formData);
+    if(!session.subscriptionId) throw new Error("Set Up Billing First")
+        
     const { firstMessage, voiceOptions, systemPrompt, dataCollection } = formData
 
     assert( dataCollection != undefined);
 
-    const newAgent = await createAgent(firstMessage, voiceOptions, systemPrompt, dataCollection, String(session.tenantId))
-
+    const newAgent = await createAgent(firstMessage, voiceOptions, systemPrompt, dataCollection)
     assert( newAgent != null);
+
+    const createdSIPURI = await fetch(`${process.env.VAPI_API_URL}/phone-number`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.VAPI_API_KEY}`
+        },
+        body: JSON.stringify({
+            "provider": "vapi",
+            "sipUri": `sip:${newAgent.id}:AC@sip.vapi.ai`,
+            "assistantId": newAgent.id
+        })
+
+    })
+
+    console.log(createdSIPURI);
+  
+    if (!createdSIPURI.ok) {
+        console.log(await createdSIPURI.json());
+        throw new Error(`Request failed with status: ${createdSIPURI.status}`);
+    }
+
+    const sipURI = await createdSIPURI.json()
 
     const insertedAgent = await prisma.agent.create({
         data: {
             'id': newAgent!.id,
-            'tenantId': String(session.tenantId)
+            'tenantId': String(session.tenantId),
+            'phoneNumberId': sipURI.id,
+            'sipURI': sipURI.sipUri
         }
     })
 
     return insertedAgent
+}
+
+export async function updateAgentAction(agentId: string, formData: FormValues){
+    const session = await verifySession(true) //false means user does not need to be admin to hit endpoint
+    if (!session) return null;
+
+    const { firstMessage, voiceOptions, systemPrompt, dataCollection } = formData
+
+    assert( dataCollection != undefined);
+
+    const updatedAgent = await updateAgent(agentId, firstMessage, voiceOptions, systemPrompt, dataCollection)
+
+    assert( updatedAgent != null);
+
+    return updatedAgent
 }
 
 export async function deactivateGroup(agentId: string){
@@ -51,7 +91,7 @@ export async function deactivateGroup(agentId: string){
 
     try{
 
-        
+    console.log(agentId);        
 
 
     } catch(error){

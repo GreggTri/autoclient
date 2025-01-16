@@ -9,8 +9,10 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  //must add indexes manually here is link to docs: https://planetscale.com/docs/prisma/prisma-best-practices
+  relationMode = "prisma"
 }
 
 model User {
@@ -27,6 +29,7 @@ model User {
   org Org @relation(fields: [tenantId], references: [id])
 
   @@id([id, tenantId])
+  @@index([tenantId])
   @@map("users")
 }
 
@@ -34,51 +37,87 @@ model Org {
   id          String @id @default(uuid())
   companyName String @unique
 
-  stripeCustomerId       String?   @map(name: "stripe_customer_id")
-  stripeSubscriptionId   String?   @map(name: "stripe_subscription_id")
-  stripePriceId          String?   @map(name: "stripe_price_id")
-  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
-  updatedAt              DateTime  @updatedAt
-  createdAt              DateTime  @default(now())
+  stripeCustomerId       String?  @map(name: "stripe_customer_id")
+  stripeSubscriptionId   String?  @map(name: "stripe_subscription_id")
+  stripeCurrentPeriodEnd Int?     @map(name: "stripe_current_period_end")
+  stripeStatus           String?
+  updatedAt              DateTime @updatedAt
+  createdAt              DateTime @default(now())
 
-  invites Invite[]
-  users   User[]
-  agents  Agent[]
-  calls   Call[]
-  leads   Lead[]
+  invites   Invite[]
+  users     User[]
+  agents    Agent[]
+  calls     Call[]
+  leads     Lead[]
+  ResetPass ResetPass[]
 
   @@map("orgs")
 }
 
 model Invite {
-  id        String   @default(uuid())
-  tenantId  String
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
+  id            String   @default(uuid())
+  tenantId      String
+  invitedEmail  String
+  token         String   @unique
+  resendEmailId String
+  isActive      Boolean  @default(true)
+  //expireAt      DateTime
+  createdAt     DateTime @default(now())
 
   org Org @relation(fields: [tenantId], references: [id])
 
   @@id([id, tenantId])
+  @@index([tenantId])
+  @@index([resendEmailId])
   @@map("invites")
 }
 
+model ResetPass {
+  id            String   @default(uuid())
+  tenantId      String
+  userId        String
+  token         String   @unique
+  resendEmailId String
+  isActive      Boolean  @default(true)
+  expireAt      DateTime
+  createdAt     DateTime @default(now())
+
+  org Org @relation(fields: [tenantId], references: [id])
+
+  @@id([id, tenantId])
+  @@index([tenantId])
+  @@index([resendEmailId])
+  @@map("ResetPass")
+}
+
 model Agent {
-  id         String  @unique
-  tenantId   String
-  isArchived Boolean @default(false)
+  id            String  @unique
+  tenantId      String
+  phoneNumberId String
+  sipURI        String  @unique
+  isArchived    Boolean @default(false)
 
   org Org @relation(fields: [tenantId], references: [id])
 
   calls Call[]
 
   @@id([id, tenantId])
+  @@index([tenantId])
   @@map("agents")
 }
 
 model Call {
-  id       String @unique
-  agentId  String
-  tenantId String
+  id               String   @unique
+  agentId          String
+  tenantId         String
+  recording        String
+  transcript       String   @db.LongText
+  summary          String   @db.MediumText
+  cost             Float
+  stripeBilledCall Boolean  @default(false)
+  durationSeconds  Int
+  timestamp        String
+  createdAt        DateTime @default(now())
 
   agent Agent @relation(fields: [agentId], references: [id])
   org   Org   @relation(fields: [tenantId], references: [id])
@@ -86,17 +125,43 @@ model Call {
   lead Lead?
 
   @@id([id, tenantId])
+  @@index([tenantId])
+  @@index([agentId])
   @@map("calls")
 }
 
 model Lead {
-  id       String @unique @default(uuid())
-  callId   String? @unique
-  tenantId String
+  id        String   @unique @default(uuid())
+  callId    String   @unique
+  tenantId  String
+  data      Json
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 
   call Call? @relation(fields: [callId], references: [id])
-  org  Org  @relation(fields: [tenantId], references: [id])
+  org  Org   @relation(fields: [tenantId], references: [id])
 
   @@id([id, tenantId])
+  @@index([tenantId])
   @@map("leads")
+}
+
+model contactForm {
+  id      String @id @default(uuid())
+  name    String
+  email   String
+  company String
+  subject String
+  message String @db.LongText
+
+  createdAt DateTime @default(now())
+}
+
+model Feedback {
+  id        String   @default(uuid())
+  tenantId  String
+  message   String   @db.LongText
+  createdAt DateTime @default(now())
+
+  @@id([id, tenantId])
 }

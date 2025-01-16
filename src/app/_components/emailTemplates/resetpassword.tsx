@@ -1,9 +1,11 @@
+import toCapitalized from "@/app/_lib/toCapitalized";
 import {
   Body,
   Button,
   Container,
   Head,
   Html,
+  Link,
   Preview,
   Section,
   Text,
@@ -17,12 +19,12 @@ interface ResetPasswordEmailProps {
 
 export const ResetPasswordEmail = ({
   userFirstName = "Gregg",
-  resetPasswordLink = "https://gethappyclient.com/forgot-password",
+  resetPasswordLink,
 }: ResetPasswordEmailProps) => {
   return (
     <Html>
       <Head />
-      <Preview>HappyClient: reset your password</Preview>
+      <Preview>AutoClient: reset your password</Preview>
       <Body style={main}>
         <Container style={container}>
           {/* <Img
@@ -32,7 +34,7 @@ export const ResetPasswordEmail = ({
             alt="Happy Client"
           /> */}
           <Section>
-            <Text style={text}>Hi {userFirstName},</Text>
+            <Text style={text}>Hi {toCapitalized(userFirstName)},</Text>
             <Text style={text}>
               Someone recently requested a password change for your <br />
               <strong>Happy Client </strong>
@@ -41,6 +43,12 @@ export const ResetPasswordEmail = ({
             <Button style={button} href={resetPasswordLink}>
               Reset password
             </Button>
+            <Text className="text-black text-[14px] leading-[24px]">
+              or copy and paste this URL into your browser:{" "}
+              <Link href={resetPasswordLink} className="text-blue-600 no-underline">
+                {resetPasswordLink}
+              </Link>
+            </Text>
             <Text style={text}>
               If you don&apos;t want to change your password or didn&apos;t
               request this, just ignore and delete this message.
@@ -48,9 +56,6 @@ export const ResetPasswordEmail = ({
             <Text style={text}>
               To keep your account secure, please do <b>NOT</b> forward this
               email to anyone.
-            </Text>
-            <Text style={text}>
-              <strong>Go make some happy clients!</strong>
             </Text>
           </Section>
         </Container>
@@ -82,7 +87,7 @@ const text = {
 };
 
 const button = {
-  backgroundColor: "#f4e300",
+  backgroundColor: "#5110de",
   borderRadius: "4px",
   color: "#000",
   fontFamily: "'Open Sans', 'Helvetica Neue', Arial",

@@ -1,8 +1,10 @@
 'use client'
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 import { updateName } from "./actions";
 import { Icons } from "@/app/_components/icons";
+import { useActionState } from "react";
+import toCapitalized from "@/app/_lib/toCapitalized";
 
 interface User {
     id?: string | null | undefined
@@ -19,7 +21,7 @@ interface UpdateProfileFormProps {
 }
 
 const UpdateProfileForm = ({ user }: UpdateProfileFormProps) => {
-   const [state, action ] = useFormState(updateName, undefined)
+   const [state, action ] = useActionState(updateName, undefined)
 
   
   return (
@@ -31,7 +33,7 @@ const UpdateProfileForm = ({ user }: UpdateProfileFormProps) => {
             id="firstName"
             name="firstName"
             type="text"
-            placeholder={user?.firstName ? user.firstName : ""}
+            placeholder={user?.firstName ? toCapitalized(user.firstName)  : ""}
             />
             {state?.errors?.firstName &&  <p className="text-sm text-red-500">{state.errors.firstName}</p>}
         </div>
@@ -44,7 +46,7 @@ const UpdateProfileForm = ({ user }: UpdateProfileFormProps) => {
             id="lastName"
             name="lastName"
             type="text"
-            placeholder={user?.lastName ? user.lastName : ""}
+            placeholder={user?.lastName ? toCapitalized(user.lastName) : ""}
             />
             {state?.errors?.lastName &&  <p className="text-sm text-red-500">{state.errors.lastName}</p>}
         </div>
@@ -62,7 +64,7 @@ export function UpdateProfileButton() {
     return (
         <div className="flex justify-end align-bottom">
             <button 
-                className="flex flex-row mt-5 px-4 py-1 bg-primary rounded-md text-sm text-BLACK" 
+                className="flex flex-row mt-5 px-4 py-1 bg-PURPLE rounded-md text-sm text-BLACK" 
                 disabled={pending}
                 type="submit"
                 >

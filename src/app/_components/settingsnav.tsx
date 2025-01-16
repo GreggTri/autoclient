@@ -39,19 +39,6 @@ const SettingsNavBar = () => {
                 >
                     Integrations
                 </Link> */}
-                <Link 
-                href="/settings/emailBranding" 
-                className={`ml-3 p-1 ${isActive("/settings/emailBranding") ? 'bg-WHITE/10 p-1 rounded-md' : 'hover:bg-WHITE/10 hover:p-1 hover:rounded-md'}`}
-                >
-                    Email Sending Setup
-                </Link>
-                <Link 
-                href="/settings/customDomain" 
-                className={`ml-3 p-1 ${isActive("/settings/customDomain") ? 'bg-WHITE/10 p-1 rounded-md' : 'hover:bg-WHITE/10 hover:p-1 hover:rounded-md'}`}
-                >
-                    Survey Custom Domain
-                </Link>
-                
                 
                 <Link 
                     href="/settings/account" 

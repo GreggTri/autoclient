@@ -4,7 +4,6 @@ import "server-only"
 import { prisma } from "@/utils/prisma";
 import { cache } from 'react'
 import { verifySession } from "../_lib/session";
-import { AttachedUsers } from '@prisma/client';
 
 
 export const fetchUser = cache(async () => {
@@ -26,7 +25,6 @@ export const fetchUser = cache(async () => {
                 firstName: true,
                 lastName: true,
                 email: true,
-                role: true,
                 isAdmin: true
             }
         })
@@ -82,16 +80,13 @@ export const fetchUsers = cache(async (q: string, page: number) => {
             where: {
                 OR: [
                     {firstName: {
-                        contains: q,
-                        mode: 'insensitive'
+                        contains: q
                     }},
                     {lastName: {
-                        contains: q,
-                        mode: 'insensitive'
+                        contains: q
                     }},
                     {email: {
-                        contains: q,
-                        mode: 'insensitive'
+                        contains: q
                     }}
                 ],
                 org: {
@@ -105,16 +100,13 @@ export const fetchUsers = cache(async (q: string, page: number) => {
             where: {
                 OR: [
                     {firstName: {
-                        contains: q,
-                        mode: 'insensitive'
+                        contains: q
                     }},
                     {lastName: {
-                        contains: q,
-                        mode: 'insensitive'
+                        contains: q
                     }},
                     {email: {
-                        contains: q,
-                        mode: 'insensitive'
+                        contains: q
                     }}
                 ],
                 org: {
@@ -126,7 +118,6 @@ export const fetchUsers = cache(async (q: string, page: number) => {
                 firstName: true,
                 lastName: true,
                 email: true,
-                role: true,
                 isAdmin: true
             },
             take: ITEM_PER_PAGE,
@@ -147,39 +138,6 @@ export const fetchUsers = cache(async (q: string, page: number) => {
         }
     }   
 })
-
-export async function getAttachedUsers(users: AttachedUsers[]){
-    try{
-        const session = await verifySession(true)
-
-        if (!session || session.isAuth === false) return null;
-
-        const getGroupedUsers = await prisma.user.findMany({
-            where: {
-                tenantId: String(session.tenantId),
-                AND: {
-                    id: {
-                        in: users.map((user) => user.userId)
-                    }
-                }
-            },
-            select: {
-                id: true,
-                firstName: true,
-                lastName: true,
-                password: false
-            }
-        })
-
-        if(!getGroupedUsers) return null;
-
-        return getGroupedUsers
-    } catch(error){
-        console.log(error);
-    }
-
-    
-}
 
 export const getUsers = cache(async() => {
     try{
@@ -207,3 +165,20 @@ export const getUsers = cache(async() => {
         console.log(error);
     }
 })
+
+
+
+export const getInvitedUserByToken = async(tokenId: string) => {
+
+    const getInvitedData = await prisma.invite.findUnique({
+        'where': {
+            'token': tokenId
+        }
+    })
+
+    if(getInvitedData == null){
+        return null
+    }
+
+    return getInvitedData
+}

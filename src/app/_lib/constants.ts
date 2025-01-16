@@ -1,1 +1,1 @@
-export const SESSION_UPDATE_THRESHOLD = 30 * 60 * 1000; 
+export const SESSION_UPDATE_THRESHOLD = 2 * 60 * 60 * 1000; 

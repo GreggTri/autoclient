@@ -1,8 +1,10 @@
+import 'server-only'
+
 const DashboardPage = () => {
 
     return (
       <div className="">
-        HappyClient Dashboard
+        AutoClient Dashboard
       </div>
     );
   }

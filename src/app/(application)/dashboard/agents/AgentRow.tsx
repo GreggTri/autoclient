@@ -1,4 +1,4 @@
-'use server'
+import 'server-only'
 
 import { TableCell, TableRow } from '@/components/ui/table'
 import React from 'react'
@@ -8,6 +8,7 @@ import { redirect } from 'next/navigation';
 import DeactivateGroupbuttonComponent from './DeactivateGroupbuttonComponent';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
+import Link from 'next/link';
 
 
 
@@ -24,18 +25,14 @@ async function AgentRow({agent}:
         redirect('/')
     }
 
-    // const groupedUsers = await getAttachedUsers(group.attachedUsers)
-    
-    // if (!groupedUsers) {
-    //     revalidatePath(`/dashboard/forms/detail/`)
-    //     redirect('/dashboard/forms')
-    // }
-
     return (
-        <TableRow className={cn(agent.isArchived && 'opacity-50' ,'place-content-center border-white/50 hover:bg-[#2a2a2a] cursor-default')}>
+        <TableRow 
+        className={cn(agent.isArchived && 'opacity-50' ,'place-content-center border-white/50 cursor-default')}>
             {/* Names */}
-            <TableCell className="flex flex-col font-medium">
-                {agent.id}
+            <TableCell className="flex flex-col font-medium hover:underline">
+                <Link href={`/dashboard/agents/${agent.id}`}>
+                    {agent.id}
+                </Link>
             </TableCell>
 
 

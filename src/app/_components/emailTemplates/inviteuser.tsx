@@ -1,3 +1,4 @@
+import toCapitalized from "@/app/_lib/toCapitalized";
 import {
   Body,
   Button,
@@ -29,7 +30,7 @@ export const InviteUserEmail = ({
   companyName = "The Husband & Wife Law Team",
   inviteLink = "https://vercel.com/teams/invite/foo",
 }: InviteUserEmailProps) => {
-  const previewText = `Join ${firstName} ${lastName} on Happy Client`;
+  const previewText = `Join ${toCapitalized(firstName)} ${toCapitalized(lastName)} on AutoClient`;
 
   return (
     <Html>
@@ -46,11 +47,11 @@ export const InviteUserEmail = ({
           /> */}
             <Heading className="text-black text-[24px] font-normal text-center p-0 my-[30px] mx-0">
               Join <strong>{companyName}</strong> on{" "}
-              <strong>Happy Client</strong>
+              <strong>AutoClient</strong>
             </Heading>
             <Text className="text-black text-[14px] leading-[24px]">
               <strong>
-                {firstName} {lastName}
+                {toCapitalized(firstName)} {toCapitalized(lastName)}
               </strong>{" "}
               (
               <Link
@@ -60,12 +61,12 @@ export const InviteUserEmail = ({
                 {invitedByEmail}
               </Link>
               ) has invited you to <strong>{companyName}</strong> on{" "}
-              <strong>Happy Client</strong>.
+              <strong>AutoClient</strong>.
             </Text>
             <Section></Section>
             <Section className="text-center mt-[32px] mb-[32px]">
               <Button
-                className="bg-[#f4e300] rounded text-black text-[16px] font-semibold no-underline text-center px-5 py-3 shadow"
+                className="bg-PURPLE rounded text-black text-[16px] font-semibold no-underline text-center px-5 py-3 shadow"
                 href={inviteLink}
               >
                 Join the team!

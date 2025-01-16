@@ -5,9 +5,11 @@ import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/app/_components/icons"
 import { UserAuthForm } from "@/app/_components/user-auth-form"
+import Image from "next/image";
+import icon from '../../../../public/assets/icon.svg'
 
 export const metadata: Metadata = {
-  title: "Login | Happy Client",
+  title: "Login | AutoClient",
   description: "Login to your account",
 }
 
@@ -28,7 +30,7 @@ export default function LoginPage() {
       </Link>
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col space-y-2 text-center">
-          <Icons.logo className="mx-auto h-6 w-6" />
+          <Image src={icon} width={150} alt="AutoClient Icon" className="mx-auto h-12 w-12"/>
           <h1 className="text-2xl font-semibold tracking-tight">
             Welcome back
           </h1>
@@ -37,10 +39,18 @@ export default function LoginPage() {
           </p>
         </div>
         <UserAuthForm />
+        <p className="px-8 text-center text-sm text-gray-400">
+          <Link
+            href="/forgot-password"
+            className="hover:text-PURPLE underline underline-offset-4"
+          >
+            Forgot password?
+          </Link>
+        </p>
         <p className="px-8 text-center text-sm text-muted-foreground">
           <Link
             href="/register"
-            className="hover:text-brand underline underline-offset-4"
+            className="hover:text-opacity-50 underline underline-offset-4"
           >
             Don&apos;t have an account? Sign Up
           </Link>

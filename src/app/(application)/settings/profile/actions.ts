@@ -31,6 +31,8 @@ export const updateName =  async(state: UpdateProfileFormState, formData: FormDa
 
     const { firstName, lastName} = validationResult.data
 
+    const firstname = firstName.toLowerCase()
+    const lastname = lastName.toLowerCase()
     await prisma.user.update({
         where: {
             id: session.userId,
@@ -39,8 +41,8 @@ export const updateName =  async(state: UpdateProfileFormState, formData: FormDa
             }
         },
         data: {
-            ...(firstName && {firstName: firstName}),
-            ...(lastName && {lastName: lastName})
+            ...(firstname && {firstName: firstname}),
+            ...(lastname && {lastName: lastname})
         }
     })
 
