@@ -9,6 +9,7 @@ export const getOrg = async() => {
     //this function handles all verification/authorization
     const session = await verifySession(true)
     if (!session) return null;
+    if(session.isAdmin == false) return null;
 
     try{
         return await prisma.org.findUnique({

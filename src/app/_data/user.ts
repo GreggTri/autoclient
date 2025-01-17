@@ -4,6 +4,7 @@ import "server-only"
 import { prisma } from "@/utils/prisma";
 import { cache } from 'react'
 import { verifySession } from "../_lib/session";
+import { redirect } from "next/navigation";
 
 
 export const fetchUser = cache(async () => {
@@ -63,14 +64,10 @@ export const fetchUser = cache(async () => {
 //ADMIN-ONLY function
 export const fetchUsers = cache(async (q: string, page: number) => {
 
-    const {isAuth, tenantId} = await verifySession(true)
+    const session = await verifySession(true)
+    if (!session) return null;
+    if(session.isAdmin == false) redirect('/settings/profile');
 
-    if (!isAuth) return {
-        success: false,
-        count: 0,
-        users: [],
-        message: "Unauthorized"
-    };
     //const regex = new RegExp(q, "i");
     const ITEM_PER_PAGE = 10;
 
@@ -90,7 +87,7 @@ export const fetchUsers = cache(async (q: string, page: number) => {
                     }}
                 ],
                 org: {
-                    id: String(tenantId)
+                    id: String(session.tenantId)
                 }
             },
             
@@ -110,7 +107,7 @@ export const fetchUsers = cache(async (q: string, page: number) => {
                     }}
                 ],
                 org: {
-                    id: String(tenantId)
+                    id: String(session.tenantId)
                 }
             },
             select: {
@@ -142,8 +139,8 @@ export const fetchUsers = cache(async (q: string, page: number) => {
 export const getUsers = cache(async() => {
     try{
         const session = await verifySession(true)
-
         if (!session || session.isAuth === false) return null;
+        if(session.isAdmin == false) return null;
 
         const getGroupedUsers = await prisma.user.findMany({
             where: {

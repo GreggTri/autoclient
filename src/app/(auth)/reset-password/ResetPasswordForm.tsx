@@ -36,7 +36,7 @@ export default function ResetPasswordForm({token}: {token: string}) {
     return (
         <form action={action} className="space-y-4">
           <div className="space-y-2">
-            <input type="text" hidden id='token' name='token' value={token} />
+            <input type="text" hidden id='token' name='token' defaultValue={token} />
             <Label htmlFor="password" className="text-white">New Password</Label>
             <Input
               id="password"

@@ -370,8 +370,9 @@ function formatPropertiesToDataCollection(properties: Record<string, { descripti
 
 //grabs all data for agent from Vapi
 export const getAgentDataVapi = cache(async (agentId: string) => {
-  const session = await verifySession(false) //false means user does not need to be admin to hit endpoint
+  const session = await verifySession(true) //false means user does not need to be admin to hit endpoint
   if (!session) return null;
+  if(session.isAdmin == false) return null;
 
   //grab agent data from vapi to be able to edit / update
   const agentData = await vapiServer.assistants.get(agentId);

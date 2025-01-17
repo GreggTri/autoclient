@@ -2,9 +2,6 @@ import 'server-only'
 
 import { TableCell, TableRow } from '@/components/ui/table'
 import React from 'react'
-import { verifySession } from '@/app/_lib/session';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import DeactivateGroupbuttonComponent from './DeactivateGroupbuttonComponent';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
@@ -18,13 +15,7 @@ async function AgentRow({agent}:
     
     isArchived: boolean
 }}) {
-    const {isAuth} = await verifySession(true)
-
-    if (!isAuth) {
-        revalidatePath('/')
-        redirect('/')
-    }
-
+    
     return (
         <TableRow 
         className={cn(agent.isArchived && 'opacity-50' ,'place-content-center border-white/50 cursor-default')}>

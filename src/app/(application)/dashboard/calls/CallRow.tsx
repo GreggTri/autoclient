@@ -2,9 +2,6 @@
 
 import { TableCell, TableRow } from '@/components/ui/table'
 import React from 'react'
-import { verifySession } from '@/app/_lib/session';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
 
@@ -28,12 +25,6 @@ export default async function CallRow({call}:
     durationSeconds: number;
     timestamp: string;
 }}) {
-    const {isAuth} = await verifySession(true)
-    
-    if (!isAuth) {
-        revalidatePath('/')
-        redirect('/')
-    }
 
     const datetime = new Date(Number(call.timestamp))
     const formattedDate = datetime.toUTCString();
