@@ -11,8 +11,18 @@ async function IframeLoadingState(){
   return "Loading Video..."
 }
 
-async function IframeVideoComponent(){
-  return <iframe src="https://www.youtube.com/embed/9Mlxjr7K6D4?si=jl9hZ5a2zWoVodhK" title="YouTube video player" className='w-[720px]' height={450} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
+function IframeVideoComponent() {
+  return (
+    <div className="relative w-full max-w-[720px] mx-auto aspect-[16/9]">
+      <iframe
+        src="https://www.youtube.com/embed/9Mlxjr7K6D4?si=jl9hZ5a2zWoVodhK"
+        title="YouTube video player"
+        className="absolute top-0 left-0 w-full h-full"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      />
+    </div>
+  );
 }
 
 export default async function Home() {
@@ -23,10 +33,11 @@ export default async function Home() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="py-12 md:py-20 bg-[#0a0a09]">
+        <section className="py-12 md:py-20 bg-[#0a0a09] flex items-center">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="flex flex-col md:flex-row items-center justify-between">
-              <div className="md:w-1/2 mb-8 md:mb-0">
+            <div className="flex flex-col md:flex-row md:items-center justify-between">
+              {/* Text Content */}
+              <div className="w-full md:w-1/2 text-center md:text-left flex flex-col items-center md:items-start justify-center">
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 text-[#f5f5f5] leading-tight">
                   Empathy Engineered For Every Client
                 </h1>
@@ -37,9 +48,11 @@ export default async function Home() {
                   Get a Demo<ArrowRight className="ml-2" />
                 </Button>
               </div>
-              <div className="md:w-1/2 mt-8 md:mt-0">
-                <Suspense fallback={<IframeLoadingState/>}>
-                  <IframeVideoComponent/>
+
+              {/* Video Content */}
+              <div className="w-full md:w-1/2 mt-8 md:mt-0 flex justify-center">
+                <Suspense fallback={<IframeLoadingState />}>
+                  <IframeVideoComponent />
                 </Suspense>
               </div>
             </div>
