@@ -48,8 +48,6 @@ export async function createAgentAction(formData: FormValues){
         })
 
     })
-
-    console.log(createdSIPURI);
   
     if (!createdSIPURI.ok) {
         console.log(await createdSIPURI.json());

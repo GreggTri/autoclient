@@ -7,6 +7,7 @@ import User from "./user";
 import { Icons } from "@/app/_components/icons";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import SendInviteForm from './SendInviteForm';
+import { redirect } from 'next/navigation';
 
 interface user {
   id: string
@@ -24,8 +25,11 @@ const TeamSettingsPage = async ({ searchParams }: {searchParams: Promise<SearchP
     const resolvedSearchParams = await searchParams;
     const q = resolvedSearchParams?.q || "";
     const page: number = Number(resolvedSearchParams?.page || 1);
-    const {success, count, users} = await fetchUsers(q, page);
-    
+    const listOfUsers = await fetchUsers(q, page);
+
+    if(listOfUsers == null){
+        redirect('/login')
+    }
     return (
         <div className="flex flex-col space-y-2 w-full border-l-2 border-gray-500 px-4">
         <h1 className="font-bold">Team</h1>
@@ -52,12 +56,12 @@ const TeamSettingsPage = async ({ searchParams }: {searchParams: Promise<SearchP
                         </tr>
                     </thead>
                     <tbody>
-                        {success && count > 0 ? users!.map((user: user) => (
+                        {listOfUsers.success && listOfUsers.count > 0 ? listOfUsers.users.map((user: user) => (
                             <User key={user.id} user={user}/>
                         )) : <p className="text-red-500">Error: Could not find any users! Please contact support!</p>}
                     </tbody>
                 </table>
-                <Pagination count={count}/>
+                <Pagination count={listOfUsers.count}/>
             </div>
         
         </div>

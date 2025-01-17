@@ -1,14 +1,14 @@
 import 'server-only'
 
-const DashboardPage = () => {
+const DashboardPage = async() => {
 
-    return (
-      <div className="">
-        AutoClient Dashboard
-      </div>
-    );
-  }
+  return (
+    <div className="">
+      AutoClient Dashboard
+    </div>
+  );
+}
 
 
 
-  export default DashboardPage
+export default DashboardPage

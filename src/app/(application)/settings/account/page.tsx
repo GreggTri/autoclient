@@ -1,6 +1,5 @@
 import 'server-only'
 
-import { verifySession } from "@/app/_lib/session";
 import { redirect } from "next/navigation";
 import CompanyNameForm from "./CompanyNameForm";
 import Link from "next/link";
@@ -9,8 +8,6 @@ import { Icons } from "@/app/_components/icons";
 import { getOrg } from "@/app/_data/org";
 
 async function OrgAccountSettingsPage(){
-  const session = await verifySession(true)
-  if (!session) return redirect('/login');
 
   const org = await getOrg(); //just have a getOrg function
   if(!org) return redirect('/settings/profile');
