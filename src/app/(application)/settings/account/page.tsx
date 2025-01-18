@@ -24,7 +24,7 @@ async function OrgAccountSettingsPage(){
 
         {org.stripeSubscriptionId ? 
           <div className="my-6">
-            <Link href={`https://billing.stripe.com/p/login/test_9AQ6oJ7VN97cgs85kk`} className='underline'>
+            <Link href={`${process.env.STRIPE_BILLING_PORTAL_LINK}`} className='underline'>
               Manage Subscription
             </Link>
           </div>
