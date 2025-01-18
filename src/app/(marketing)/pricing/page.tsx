@@ -5,19 +5,15 @@ import { Icons } from "@/app/_components/icons"
 import NavBar from "@/app/_components/navbar"
 import { cn } from "@/lib/utils"
 import { ArrowRight } from "lucide-react"
-import Head from "next/head"
-//import { GoogleAnalytics } from "@next/third-parties/google"
-import Script from "next/script"
 
 export const metadata = {
   title: "Pricing | AutoClient",
 }
 
 export default function PricingPage() {
-    const isProd = process.env.ENVIRONMENT === 'prod';
     return (
         <div className="flex flex-col">
-            <Head>
+            {/* <Head>
                 {isProd &&
                 <>
                 <Script async src="https://www.googletagmanager.com/gtag/js?id=G-C65FYE6C0T"/>
@@ -34,7 +30,7 @@ export default function PricingPage() {
                 />
                 </>
                 }    
-            </Head>
+            </Head> */}
             <NavBar/>
             <div className="flex flex-col my-20 py-2 px-[12%]">
                 <div className="">

@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster"
-//import Head from 'next/head';
+import Head from "next/head";
+import { GoogleAnalytics } from "@next/third-parties/google"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,12 +23,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isProd = process.env.ENVIRONMENT === 'prod';
   return (
     <html lang="en" className="scrollbar-none overflow-y-scroll">
-      {/* <Head>
-        <link rel="icon" href="/public/assets/icon-32x32.png" sizes="32x32" />
-        <link rel="icon" href="/public/assets/icon-16x16.png" sizes="16x16" />
-      </Head> */}
+      <Head>
+        {isProd && <GoogleAnalytics gaId="G-C65FYE6C0T" />}  
+      </Head>
       <body
         className={` ${inter.className} min-h-screen bg-background text-text antialiased`}
       >
