@@ -1,6 +1,7 @@
 import 'server-only'
 
 import NavBar from "@/app/_components/navbar"
+import { GoogleAnalytics } from "@next/third-parties/google"
 
 export const metadata = {
   title: "Let's Talk! | AutoClient",
@@ -9,24 +10,7 @@ export const metadata = {
 export default async function ConversationPage() {
   return (
     <div className="flex flex-col">
-      {/* <Head>
-        {isProd &&
-        <>
-          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-C65FYE6C0T"/>
-          <Script
-            id="google-analytics"
-            dangerouslySetInnerHTML={{
-              __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', 'G-<NO LOOKIE>');
-              `,
-            }}
-          />
-        </>
-        }    
-      </Head> */}
+      <GoogleAnalytics gaId="G-C65FYE6C0T" />
       <NavBar/>
       <div className="flex justify-center">
         <div className="flex flex-col my-16 py-2 bg-white w-[95%] rounded-md ">
