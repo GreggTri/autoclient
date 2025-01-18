@@ -6,6 +6,7 @@ import ContactUsForm from "./ContactUsForm";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/app/_components/navbar";
 import { Suspense } from "react";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 async function IframeLoadingState(){
   return "Loading Video..."
@@ -26,9 +27,9 @@ function IframeVideoComponent() {
 }
 
 export default async function Home() {
-  //const isProd = process.env.ENVIRONMENT === 'prod';
   return (
     <div className="flex flex-col min-h-screen bg-[#0a0a09] text-[#f5f5f5]">
+      <GoogleAnalytics gaId="G-C65FYE6C0T" />
       <Navbar />
 
       <main className="flex-grow">
