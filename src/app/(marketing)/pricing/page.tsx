@@ -13,7 +13,7 @@ export const metadata = {
 }
 
 export default function PricingPage() {
-    const isProd = process.env.NODE_ENV === 'production';
+    const isProd = process.env.ENVIRONMENT === 'prod';
     return (
         <div className="flex flex-col">
             <Head>
