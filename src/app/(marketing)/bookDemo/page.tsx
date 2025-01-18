@@ -1,4 +1,4 @@
-'use server'
+import 'server-only'
 
 import NavBar from "@/app/_components/navbar"
 import { GoogleAnalytics } from "@next/third-parties/google"
@@ -8,7 +8,7 @@ export const metadata = {
   title: "Let's Talk! | AutoClient",
 }
 
-export default function ConversationPage() {
+export default async function ConversationPage() {
   const isProd = process.env.NODE_ENV === 'production';
   return (
     <div className="flex flex-col">
