@@ -28,7 +28,7 @@ function IframeVideoComponent() {
 }
 
 export default async function Home() {
-  const isProd = process.env.NODE_ENV === 'production';
+  const isProd = process.env.ENVIRONMENT === 'prod';
   return (
     <div className="flex flex-col min-h-screen bg-[#0a0a09] text-[#f5f5f5]">
       <Head>
