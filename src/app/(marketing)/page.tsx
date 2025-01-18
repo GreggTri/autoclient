@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import Navbar from "@/app/_components/navbar";
 import { Suspense } from "react";
 import Head from 'next/head';
-import { GoogleAnalytics } from '@next/third-parties/google'
+import Script from 'next/script'
+//import { GoogleAnalytics } from '@next/third-parties/google'
 
 async function IframeLoadingState(){
   return "Loading Video..."
@@ -32,7 +33,22 @@ export default async function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-[#0a0a09] text-[#f5f5f5]">
       <Head>
-        {isProd && <GoogleAnalytics gaId="G-C65FYE6C0T" />}    
+        {isProd &&
+        <>
+          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-C65FYE6C0T"/>
+          <Script
+            id="google-analytics"
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-<NO LOOKIE>');
+              `,
+            }}
+          />
+        </>
+        }    
       </Head>
       <Navbar />
 

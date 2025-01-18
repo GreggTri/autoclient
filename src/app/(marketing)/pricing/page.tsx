@@ -6,7 +6,8 @@ import NavBar from "@/app/_components/navbar"
 import { cn } from "@/lib/utils"
 import { ArrowRight } from "lucide-react"
 import Head from "next/head"
-import { GoogleAnalytics } from "@next/third-parties/google"
+//import { GoogleAnalytics } from "@next/third-parties/google"
+import Script from "next/script"
 
 export const metadata = {
   title: "Pricing | AutoClient",
@@ -17,7 +18,22 @@ export default function PricingPage() {
     return (
         <div className="flex flex-col">
             <Head>
-                {isProd && <GoogleAnalytics gaId="G-C65FYE6C0T" />}    
+                {isProd &&
+                <>
+                <Script async src="https://www.googletagmanager.com/gtag/js?id=G-C65FYE6C0T"/>
+                <Script
+                    id="google-analytics"
+                    dangerouslySetInnerHTML={{
+                    __html: `
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', 'G-<NO LOOKIE>');
+                    `,
+                    }}
+                />
+                </>
+                }    
             </Head>
             <NavBar/>
             <div className="flex flex-col my-20 py-2 px-[12%]">
