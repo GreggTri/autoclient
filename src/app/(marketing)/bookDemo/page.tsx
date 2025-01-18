@@ -1,19 +1,15 @@
 import 'server-only'
 
 import NavBar from "@/app/_components/navbar"
-//import { GoogleAnalytics } from "@next/third-parties/google"
-import Head from "next/head"
-import Script from 'next/script'
 
 export const metadata = {
   title: "Let's Talk! | AutoClient",
 }
 
 export default async function ConversationPage() {
-  const isProd = process.env.ENVIRONMENT === 'prod';
   return (
     <div className="flex flex-col">
-      <Head>
+      {/* <Head>
         {isProd &&
         <>
           <Script async src="https://www.googletagmanager.com/gtag/js?id=G-C65FYE6C0T"/>
@@ -30,7 +26,7 @@ export default async function ConversationPage() {
           />
         </>
         }    
-      </Head>
+      </Head> */}
       <NavBar/>
       <div className="flex justify-center">
         <div className="flex flex-col my-16 py-2 bg-white w-[95%] rounded-md ">
