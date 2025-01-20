@@ -87,7 +87,7 @@ export default async function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 { step: "1", title: "AI Answers Calls", description: "Our AI system answers calls 24/7, ensuring no potential client is missed." },
-                { step: "2", title: "Qualify Leads", description: "Gathers requested information from your pontential new client so you can make the most accurate decision." },
+                { step: "2", title: "Gathers Client Info", description: "Gathers requested information from your pontential new client so you can make the most accurate decision." },
                 { step: "3", title: "Seamless Handoff", description: "leads are immediately posted for your firm to view. look at your potential new clients information that you requested and review call data." },
               ].map((item, index) => (
                 <div key={index} className="flex flex-col items-center text-center">
