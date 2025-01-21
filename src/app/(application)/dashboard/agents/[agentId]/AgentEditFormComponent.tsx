@@ -108,7 +108,7 @@ function AgentEditFormComponent({
   };
 
   return (
-    <div className="min-h-screen bg-background dark:text-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl w-full space-y-8 bg-[#111110] p-8 rounded-xl shadow-md">
         <div>
           <h1 className="text-3xl font-bold text-center  text-PURPLE">Edit Your Agent</h1>

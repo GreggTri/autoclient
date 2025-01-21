@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation'
 import { createAgentAction } from './actions'
 import { Input } from '@/components/ui/input'
 import { Icons } from '@/app/_components/icons'
+import { Trash2 } from 'lucide-react'
 
 const formSchema = z.object({
   firstMessage: z.string(),
@@ -83,8 +84,8 @@ function AgentFormComponent() {
   }
   
   return (
-    <div className="min-h-screen bg-background text-white flex items-center justify-center">
-      <div className="w-full max-w-3xl p-8 space-y-8">
+    <div className="min-h-screen bg-background text-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-3xl bg-[#111110] p-8 space-y-8 rounded-xl shadow-md">
         <h1 className="text-3xl font-semibold tracking-tight text-PURPLE">
           Configure A New Intake AI Agent
         </h1>
@@ -101,7 +102,7 @@ function AgentFormComponent() {
                       First Message
                     </FormLabel>
                     <FormControl>
-                        <Input {...field} className='border border-gray-500'/>
+                        <Input {...field} className='border border-gray-500' placeholder=" e.g. Hello, this is Lea with x law firm, How may I assist you today?"/>
                     </FormControl>
                 </FormItem>
                 )}  
@@ -152,13 +153,13 @@ function AgentFormComponent() {
               2) dataCollection (Dynamic Fields) 
               Each item has: fieldName, valueType, fieldDescription
             */}
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-col space-y-4">
               <FormLabel>Data Collection Fields</FormLabel>
 
               {fields.map((fieldItem, index) => (
                 <div
                   key={fieldItem.id}
-                  className="border border-gray-500 p-4 rounded-md space-y-4"
+                  className="p-4 space-y-4 border  border-[#1A1A18] rounded-lg  bg-[#1A1A18]"
                 >
                   <div className="flex flex-col md:flex-row md:space-x-4">
                     {/* fieldName */}
@@ -234,10 +235,10 @@ function AgentFormComponent() {
                     <Button
                       type="button"
                       variant="destructive"
-                      className='text-red-500'
                       onClick={() => remove(index)}
+                      className="bg-red-500 hover:bg-red-600 text-white"
                     >
-                      Remove
+                      <Trash2 size={16} className="mr-2" /> Remove
                     </Button>
                   </div>
                 </div>
