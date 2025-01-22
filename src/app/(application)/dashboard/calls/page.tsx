@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table"
 import CallRow from "./CallRow";
 import { listCalls } from "@/app/_data/call";
-
+import { getUserTimezone } from "@/app/_data/user";
 
 export default async function callsPage({ params }: { params: Promise<{ sortByParam: string, sortOrderParam: string, pageParam: string, limitParam: number }> }) {
 
@@ -20,7 +20,7 @@ export default async function callsPage({ params }: { params: Promise<{ sortByPa
   const sortOrder = sortOrderParam || 'desc'; // Default to descending order
   const page = parseInt(pageParam, 10) || 1; // Default to page 1
   const limit = limitParam; // Items per page
-
+  const userTimezone = await getUserTimezone();
   const calls = await listCalls({ sortBy, sortOrder, page, limit });
 
   if (!calls) {
@@ -59,7 +59,9 @@ export default async function callsPage({ params }: { params: Promise<{ sortByPa
                 durationSeconds: call.durationSeconds,
                 timestamp: call.timestamp
               }
-            }/>
+            }
+            userTimezone={userTimezone!.timezone}
+            />
           ))}
         </TableBody>
       </Table>

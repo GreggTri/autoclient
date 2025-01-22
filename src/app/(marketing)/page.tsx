@@ -9,7 +9,9 @@ import { Suspense } from "react";
 import { GoogleAnalytics } from '@next/third-parties/google'
 
 async function IframeLoadingState(){
-  return "Loading Video..."
+  return (
+    <div className='text-white'>Loading Video...</div>
+  )
 }
 
 function IframeVideoComponent() {

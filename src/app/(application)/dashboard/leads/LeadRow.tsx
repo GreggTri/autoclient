@@ -3,14 +3,26 @@ import 'server-only'
 import { TableCell, TableRow } from '@/components/ui/table'
 import React from 'react'
 import Link from 'next/link';
+import { convertToTimezone } from '@/app/_lib/convertTimezone';
 
 
 
-export default async function LeadRow({lead}: 
+export default async function LeadRow({lead, userTimezone}: 
 {lead: {
     id: string;
     createdAt: Date
-}}) {
+},
+userTimezone: string | null;
+}) {
+
+    let formattedDate;
+    if(userTimezone){
+        console.log(userTimezone);
+        
+        formattedDate = convertToTimezone(lead.createdAt, userTimezone)
+    } else {
+        formattedDate = lead.createdAt.toUTCString()
+    }
 
     return (
         <TableRow 
@@ -24,7 +36,7 @@ export default async function LeadRow({lead}:
             
             {/* Time Call Happened */}
             <TableCell >
-                {lead.createdAt.toUTCString()}
+                {formattedDate}
             </TableCell>
 
         </TableRow>

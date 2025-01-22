@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table"
 import LeadRow from "./LeadRow";
 import { listLeads } from "@/app/_data/lead";
+import { getUserTimezone } from '@/app/_data/user';
 
 export default async function leadsPage({ params }: { params: Promise<{ sortByParam: string, sortOrderParam: string, pageParam: string, limitParam: number }> }) {
   // Extract query parameters
@@ -20,6 +21,8 @@ export default async function leadsPage({ params }: { params: Promise<{ sortByPa
   const page = parseInt(pageParam, 10) || 1; // Default to page 1
   const limit = limitParam; // Items per page
 
+  
+  const userTimezone = await getUserTimezone();
   // Fetch leads with pagination and sorting
   const leads = await listLeads({ sortBy, sortOrder, page, limit });
   
@@ -55,7 +58,9 @@ export default async function leadsPage({ params }: { params: Promise<{ sortByPa
                 'id': lead.id,
                 'createdAt': lead.createdAt
               }
-            }/>
+            }
+            userTimezone={userTimezone!.timezone}
+            />
           ))}
         </TableBody>
       </Table>
