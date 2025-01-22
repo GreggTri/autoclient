@@ -5,6 +5,7 @@ import { prisma } from "@/utils/prisma";
 import { cache } from 'react'
 import { verifySession } from "../_lib/session";
 import { redirect } from "next/navigation";
+import assert from "assert";
 
 
 export const fetchUser = cache(async () => {
@@ -44,6 +45,27 @@ export const fetchUser = cache(async () => {
             error: `Failed to create user! Please try again!`
         }
     }   
+})
+
+export const getUserTimezone = cache(async () => {
+    const session = await verifySession(true)
+    if (!session) return null;
+
+    const userTZ = await prisma.user.findUnique({
+        'where': {
+            'id': session.userId,
+            'tenantId': String(session.tenantId)
+        },
+        'select': {
+            'id': true,
+            'timezone': true
+        }
+    })
+
+    console.log(userTZ);
+    assert(userTZ)
+
+    return userTZ
 })
 
 // type FetchUsersResult = {

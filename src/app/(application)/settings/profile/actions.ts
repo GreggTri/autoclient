@@ -6,6 +6,7 @@ import { prisma } from '@/utils/prisma'
 import { verifySession } from "@/app/_lib/session";
 import { UpdateProfileFormState, updateProfileNameForm } from '@/app/_lib/definitions'
 import { revalidatePath } from 'next/cache';
+import assert from 'assert';
 
 export const updateName =  async(state: UpdateProfileFormState, formData: FormData) => {
 
@@ -47,4 +48,30 @@ export const updateName =  async(state: UpdateProfileFormState, formData: FormDa
     })
 
     revalidatePath('/settings/profile')
+}
+
+
+export const handleTimezoneSelection = async(timezone: string) => {
+    const session = await verifySession(false)
+    if (!session) return null;
+
+    const updatedUser = await prisma.user.update({
+        where: {
+            id: session.userId,
+            'tenantId': String(session.tenantId)
+        },
+        data: {
+            'timezone': timezone
+        },
+        select: {
+            'id': true,
+            'tenantId': true,
+            'timezone': true
+        }
+    })
+
+    assert(updatedUser)
+
+    return updatedUser;
+
 }

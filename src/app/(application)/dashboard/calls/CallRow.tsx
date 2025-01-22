@@ -3,6 +3,7 @@
 import { TableCell, TableRow } from '@/components/ui/table'
 import React from 'react'
 import Link from 'next/link';
+import { convertToTimezone } from '@/app/_lib/convertTimezone';
 
 
 function formatDuration(seconds: number): string {
@@ -18,16 +19,26 @@ function formatDuration(seconds: number): string {
 
 
 
-export default async function CallRow({call}: 
+export default async function CallRow({call, userTimezone}: 
 {call: {
     id: string;
     leadId: string;
     durationSeconds: number;
     timestamp: string;
-}}) {
+    },
+    userTimezone: string | null;
+}) {
 
     const datetime = new Date(Number(call.timestamp))
-    const formattedDate = datetime.toUTCString();
+    
+    let formattedDate;
+    if(userTimezone){
+        console.log(userTimezone);
+        
+        formattedDate = convertToTimezone(datetime, userTimezone)
+    } else {
+        formattedDate = datetime.toUTCString
+    }
 
     return (
         <TableRow 
@@ -46,7 +57,7 @@ export default async function CallRow({call}:
             
             {/* Time Call Happened */}
             <TableCell >
-                {formattedDate}
+                {String(formattedDate)}
             </TableCell>
 
             {/* Minute(s) Second(s) Used */}
