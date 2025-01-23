@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Automate Intake | AutoClient",
-  description: "",
+  description: "AI Voice Agent For Intake At Law Firms",
   icons: {
     icon: [
       { url: '/icon-16x16.png', sizes: '16x16', type: 'image/png' },

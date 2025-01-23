@@ -37,7 +37,7 @@ export async function POST(request: Request) {
           tenantId: getOrgFromAgent.tenantId,
           durationSeconds: payload.message.durationSeconds,
           cost: payload.message.cost,
-          summary: payload.message.summary,
+          summary: payload.message.summary, //payload.message.analysis.summary for using the prompt to help structure the summary better and be more accurate with names.
           transcript: payload.message.transcript,
           recording: payload.message.recordingUrl,
           timestamp: String(payload.message.timestamp),
