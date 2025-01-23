@@ -1,4 +1,10 @@
+import 'server-only'
+
 import React from 'react';
+
+export const metadata = {
+  title: "Terms Of Service | AutoClient",
+}
 
 const TermsOfService = () => {
   return (

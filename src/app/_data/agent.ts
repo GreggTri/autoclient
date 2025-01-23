@@ -104,13 +104,13 @@ export const createAgent = async (
   if(voiceOptions == "female"){
     //female
     firstVoiceOption = {
-      "provider": "cartesia",
-      "voiceId": "248be419-c632-4f23-adf1-5324ed7dbf1d"
+      "provider": "azure",
+      "voiceId": "en-US-EmmaMultilingualNeural"
     }
-    //male
+    //2nd female option
     secondVoiceOption = {
       "provider": "cartesia",
-      "voiceId": "ee7ea9f8-c0c1-498c-9279-764d6b56d189"
+      "voiceId": "248be419-c632-4f23-adf1-5324ed7dbf1d"
     }
   }
   else {
@@ -119,10 +119,11 @@ export const createAgent = async (
       "provider": "cartesia",
       "voiceId": "ee7ea9f8-c0c1-498c-9279-764d6b56d189" 
     }
-    //female
+    
+    //2nd male option
     secondVoiceOption = {
-      "provider": "cartesia",
-      "voiceId": "248be419-c632-4f23-adf1-5324ed7dbf1d"
+      "provider": "azure",
+      "voiceId": "en-US-JacobNeural"
     }
   }
 
@@ -247,11 +248,10 @@ export const updateAgent = async (
       "provider": "cartesia",
       "voiceId": "248be419-c632-4f23-adf1-5324ed7dbf1d"
     }
-    //TODO:: FIND ANOTHER FEMALE VOICE OPTION THAT IS GOOD
-    //male
+    //2nd female option
     secondVoiceOption = {
-      "provider": "cartesia",
-      "voiceId": "ee7ea9f8-c0c1-498c-9279-764d6b56d189"
+      "provider": "azure",
+      "voiceId": "en-US-EmmaMultilingualNeural"
     }
   }
   else {
@@ -260,11 +260,11 @@ export const updateAgent = async (
       "provider": "cartesia",
       "voiceId": "ee7ea9f8-c0c1-498c-9279-764d6b56d189" 
     }
-    //TODO:: FIND ANOTHER MALE VOICE OPTION THAT IS GOOD
-    //female
+    
+    //2nd male option
     secondVoiceOption = {
-      "provider": "cartesia",
-      "voiceId": "248be419-c632-4f23-adf1-5324ed7dbf1d"
+      "provider": "azure",
+      "voiceId": "en-US-JacobNeural"
     }
   }
 
