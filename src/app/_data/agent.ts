@@ -20,10 +20,16 @@ type VoiceProvider =
   | "rime-ai"
   | "tavus";
 
+const SUMMARY_PROMPT = `
+[Summarizer]
+When creating your summary, if available, for the users name, please use the spelled letters for the correct spelling of the users name. 
+add all information that is relevant and do not invent any information.
+`
+
 const STRUCTURED_DATA_PROMPT = `
-[Transcript  Data Handling]
+[Transcript Data Handling]
 some data, names, phone numbers, emails, will be spelt out for you to more accurately input the data into the Structured Data Schema. Use context awareness to understand when this is occurring and use the spelt out data to satisfy the schema requirements where applicable.
-Do not invent information not drawn from the context. Leave values with NULL, if need be. 
+Do not invent information not drawn from the context.
 Fields that require a Date and/or Time values should be given in this example format: 2025-01-14 14:17:43
 `
 
@@ -181,6 +187,7 @@ export const createAgent = async (
         "summaryPlan": {
           "enabled": true
         },
+        "summaryPrompt": SUMMARY_PROMPT,
         "structuredDataPrompt": STRUCTURED_DATA_PROMPT,
         "structuredDataSchema": structuredDataSchema
       },
@@ -314,8 +321,9 @@ export const updateAgent = async (
       },
       "analysisPlan": {
         "summaryPlan": {
-          "enabled": true
+          "enabled": true,
         },
+        "summaryPrompt": SUMMARY_PROMPT,
         "structuredDataPrompt": STRUCTURED_DATA_PROMPT,
         "structuredDataSchema": structuredDataSchema
       },
