@@ -18,7 +18,7 @@ function IframeVideoComponent() {
   return (
     <div className="relative w-full max-w-[720px] mx-auto aspect-[16/9]">
       <iframe
-        src="https://www.youtube.com/embed/9Mlxjr7K6D4?si=jl9hZ5a2zWoVodhK"
+        src="https://www.youtube.com/embed/0nbugqvL1GM?si=ARCXidJJaQcmL_wE"
         title="YouTube video player"
         className="absolute top-0 left-0 w-full h-full"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
