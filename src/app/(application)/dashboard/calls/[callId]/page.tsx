@@ -72,7 +72,7 @@ async function CallPage({ params }: { params: Promise<{ callId: string }> }) {
                     <p className="text-xs text-[#a0a0a0]">{formatDuration(call.durationSeconds)}</p>
                     </div>
                     <div>
-                    <p className="text-sm font-medium text-[#f5f5f5]">Start Time</p>
+                    <p className="text-sm font-medium text-[#f5f5f5]">Call End Time</p>
                     <p className="text-xs text-[#a0a0a0]">
                         {new Date(Number(call.timestamp)).toLocaleString()}
                     </p>
