@@ -37,7 +37,6 @@ model User {
 model Org {
   id          String @id @default(uuid())
   companyName String @unique
-  companyEIN  String?
 
   stripeCustomerId       String?  @map(name: "stripe_customer_id")
   stripeSubscriptionId   String?  @map(name: "stripe_subscription_id")
