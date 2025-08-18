@@ -29,40 +29,27 @@ export async function loginUser(state: AuthFormState, formData: FormData){
 
     try{
 
-
-        console.log("IM HERE");
-        const checkUser: PartialUser | null = await Promise.race([
-            prisma.user.findUnique({
-              where: { email },
-              select: { id: true, password: true },
-            }),
-            new Promise((_, reject) =>
-              setTimeout(() => reject(new Error("Database query timed out")), 5000) // 5 seconds timeout
-            ),
-          ]) as PartialUser | null;
-
-        console.log("IM HERE X2");
+        const checkUser: PartialUser | null = await prisma.user.findUnique({
+            where: { email },
+            select: { id: true, password: true },
+        })
 
         // If user is not found, return early
         if (!checkUser) {
 
-            console.log("I HAVE HIT NULL CHECK USER");
             return { message: 'Invalid login credentials.' };
         }
         
 
-        console.log("this is checked user" + checkUser);
         const passwordMatch = await bcrypt.compare(
             password,
             checkUser.password,
         );
 
 
-        console.log("DO PASSWORDS MATCH?!" + passwordMatch);
 
         // If the password does not match, return early
         if (!passwordMatch) {
-            console.log("do passwords not match?");
             return { message: 'Invalid login credentials.' };
         }
 
@@ -80,7 +67,6 @@ export async function loginUser(state: AuthFormState, formData: FormData){
             }
         });
 
-        console.log(authenticatedUser);
         
         // Then, if you need the org data, make a second query for the organization
         const org = await prisma.org.findUnique({
@@ -92,13 +78,10 @@ export async function loginUser(state: AuthFormState, formData: FormData){
             }
         });
 
-        console.log(org);
-
         await createSession(authenticatedUser!.id, authenticatedUser!.isAdmin, authenticatedUser!.tenantId, org!.stripeSubscriptionId );
 
        
     } catch(error){
-        console.log("AN ERROR HAPPENED");
         console.log(error);
         return {
             message: "Something went wrong when trying to login!"

@@ -31,13 +31,13 @@ export const ResetPasswordEmail = ({
             src={`${process.env.BASE_DOMAIN}/public/assets/logo.png`}
             
             height={40}
-            alt="Happy Client"
+            alt="Auto Client"
           /> */}
           <Section>
             <Text style={text}>Hi {toCapitalized(userFirstName)},</Text>
             <Text style={text}>
               Someone recently requested a password change for your <br />
-              <strong>Happy Client </strong>
+              <strong>Auto Client </strong>
               account. If this was you, you can set a new password here:
             </Text>
             <Button style={button} href={resetPasswordLink}>
