@@ -21,7 +21,7 @@ function DeactivateGroupbuttonComponent({agentId, isArchived}: {agentId: string,
           
           toast({
               title: "deactivation was successful!",
-              description: "You have successfully deactivated this survey group and all client emails",
+              description: "You have successfully deactivated the AI Agent",
               variant: "destructive",
               className: "bg-green-500 border-none"
           })
@@ -35,7 +35,7 @@ function DeactivateGroupbuttonComponent({agentId, isArchived}: {agentId: string,
         console.log(error)
 
         toast({
-          title: "Failed to deactivate survey group!",
+          title: "Failed to deactivate AI Agent",
           description: "Something went wrong! Please try again later and/or contact support!",
           variant: "destructive",
           className: "bg-red-500 border-none"
